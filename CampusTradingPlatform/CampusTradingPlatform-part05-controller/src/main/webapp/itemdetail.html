@@ -254,26 +254,34 @@
 				</div>
 			</div>
 			<div class="mui-card-footer">
-				<button type="button" class="mui-btn mui-btn-danger">
-					<a style="color: navajowhite;" href="#" >想要</a>
-				</button>
-					<button id='promptBtn' type="button" class="mui-btn mui-btn-blue mui-btn-outlined">评论</button>
-					<div id="info"></div>
-				</div>
-			</div>
+                <button class="mui-btn mui-btn-blue mui-btn-outlined" id='thinkTo' type="button">想要</button>
+                <button class="mui-btn mui-btn-blue mui-btn-outlined" id='promptBtn' type="button">评论</button>
+                <div id="info"></div>
+            </div>
+        </div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/mui.zoom.js"></script>
 		<script src="js/mui.previewimage.js"></script>
-				<script type="text/javascript" charset="utf-8">
-			//mui初始化
+        <script charset="utf-8" type="text/javascript">
 			mui.init({
 				swipeBack: true //启用右滑关闭功能
 			});
 			document.getElementById("promptBtn").addEventListener('tap', function(e) {
-				e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
-				var btnArray = ['取消', '确定'];
-				mui.prompt('请输入你对MUI的评语：', '性能好', 'Hello MUI', btnArray, function(e) {
-					if (e.index == 1) {
+                e.detail.gesture.preventDefault();
+                var btnArray = ['确定', '取消'];
+                mui.prompt('我要吐槽：', ' ', ' ', btnArray, function (e) {
+                    if (e.index == 0) {
+                        info.innerText = e.value;
+                    } else {
+                        info.innerText = '';
+                    }
+                })
+            });
+            document.getElementById("thinkTo").addEventListener('tap', function (e) {
+                e.detail.gesture.preventDefault();
+                var btnArray = ['确定', '取消'];
+                mui.prompt('请留下联系方式：', 'QQ号或者微信', '给他私信', btnArray, function (e) {
+                    if (e.index == 0) {
 						info.innerText = e.value;
 					} else {
 						info.innerText = '';
