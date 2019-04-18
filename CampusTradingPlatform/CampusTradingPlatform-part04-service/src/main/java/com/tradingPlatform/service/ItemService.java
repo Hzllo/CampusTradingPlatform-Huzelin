@@ -1,4 +1,7 @@
 package com.tradingPlatform.service;
 
-public interface ItemService {
+import com.tradingPlatform.bean.TbItem;
+import com.tradingPlatform.util.BaseService;
+
+public interface ItemService extends BaseService<TbItem> {
 }

@@ -1,4 +1,7 @@
 package com.tradingPlatform.service;
 
-public interface UserService {
+import com.tradingPlatform.bean.TbUser;
+import com.tradingPlatform.util.BaseService;
+
+public interface UserService extends BaseService<TbUser> {
 }

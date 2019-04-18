@@ -1,4 +1,7 @@
 package com.tradingPlatform.service;
 
-public interface CommentService {
+import com.tradingPlatform.bean.TbComment;
+import com.tradingPlatform.util.BaseService;
+
+public interface CommentService extends BaseService<TbComment> {
 }
