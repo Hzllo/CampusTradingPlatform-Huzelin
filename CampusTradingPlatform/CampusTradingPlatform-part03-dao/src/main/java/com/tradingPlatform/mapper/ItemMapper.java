@@ -2,9 +2,8 @@ package com.tradingPlatform.mapper;
 
 
 import com.tradingPlatform.bean.Item;
-import com.tradingPlatform.bean.User;
-import tk.mybatis.mapper.common.BaseMapper;
+import tk.mybatis.mapper.common.Mapper;
 
-public interface ItemMapper extends BaseMapper<Item> {
+public interface ItemMapper extends Mapper<Item> {
 
 }

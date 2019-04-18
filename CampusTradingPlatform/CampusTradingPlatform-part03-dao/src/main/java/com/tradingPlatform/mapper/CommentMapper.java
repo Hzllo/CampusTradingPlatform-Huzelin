@@ -2,8 +2,8 @@ package com.tradingPlatform.mapper;
 
 
 import com.tradingPlatform.bean.Comment;
-import tk.mybatis.mapper.common.BaseMapper;
+import tk.mybatis.mapper.common.Mapper;
 
-public interface CommentMapper extends BaseMapper<Comment> {
+public interface CommentMapper extends Mapper<Comment> {
 
 }
