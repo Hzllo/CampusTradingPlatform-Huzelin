@@ -3,11 +3,10 @@ package com.tradingPlatform.controller;
 import com.tradingPlatform.bean.TbUser;
 import com.tradingPlatform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.util.StringUtil;
 
-@Controller
+@RestController
 @RequestMapping(value = {"/user"})
 public class UserController {
 
@@ -39,10 +38,10 @@ public class UserController {
      * @param user
      * @return
      */
-    @PostMapping
+    @PostMapping("reg")
     public TbUser save(@RequestBody TbUser user) {
         if (StringUtil.isEmpty(user.getAvatar())) {
-            user.setAvatar("");
+            user.setAvatar("https://avatar.csdnimg.cn/b/5/c/1_hzllo_.jpg");
         }
         userService.addService(user);
 
