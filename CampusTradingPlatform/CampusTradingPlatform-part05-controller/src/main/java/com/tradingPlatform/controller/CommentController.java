@@ -31,7 +31,7 @@ public class CommentController {
      */
     @PostMapping
     public TbComment save(@RequestBody TbComment comment) {
-
+        comment.setCommentId(null).setLook(false);
         commentService.addService(comment);
 
         return commentService.findByPrimaryKeyService(comment.getCommentId());
@@ -45,18 +45,6 @@ public class CommentController {
     @DeleteMapping
     public void delete(@RequestParam Integer commentId) {
         commentService.deleteByPrimaryKeyService(commentId);
-    }
-
-    /**
-     * 更新
-     *
-     * @param comment
-     * @return
-     */
-    @PutMapping
-    public TbComment update(@RequestBody TbComment comment) {
-        commentService.updateService(comment);
-        return commentService.findByPrimaryKeyService(comment.getCommentId());
     }
 
 }
