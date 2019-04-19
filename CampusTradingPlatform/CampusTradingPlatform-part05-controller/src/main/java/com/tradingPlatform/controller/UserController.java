@@ -4,9 +4,8 @@ import com.tradingPlatform.bean.TbUser;
 import com.tradingPlatform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import tk.mybatis.mapper.util.StringUtil;
 
 @Controller
 @RequestMapping(value = {"/user"})
@@ -21,6 +20,55 @@ public class UserController {
         user.setNickname("用户" + id).setPhone("158785859" + id).setPassword("12345678" + id);
         userService.addService(user);
         return "{'1':'你好'}";
+    }
+
+    /**
+     * 查一个用户
+     *
+     * @param userId
+     * @return
+     */
+    @GetMapping
+    public TbUser findById(@RequestParam("userId") Integer userId) {
+        return userService.findByPrimaryKeyService(userId);
+    }
+
+    /**
+     * 增加一个用户
+     *
+     * @param user
+     * @return
+     */
+    @PostMapping
+    public TbUser save(@RequestBody TbUser user) {
+        if (StringUtil.isEmpty(user.getAvatar())) {
+            user.setAvatar("");
+        }
+        userService.addService(user);
+
+        return userService.findByPrimaryKeyService(user.getUserId());
+    }
+
+    /**
+     * 删除用户
+     *
+     * @param userId
+     */
+    @DeleteMapping
+    public void delete(@RequestParam Integer userId) {
+        userService.deleteByPrimaryKeyService(userId);
+    }
+
+    /**
+     * 更新用户
+     *
+     * @param user
+     * @return
+     */
+    @PutMapping
+    public TbUser update(@RequestBody TbUser user) {
+        userService.updateService(user);
+        return userService.findByPrimaryKeyService(user.getUserId());
     }
 
 }
