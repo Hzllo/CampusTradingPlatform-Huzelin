@@ -15,6 +15,12 @@
     <security:http pattern="/fonts/**" security="none"/>
     <security:http pattern="/js/**" security="none"/>
     <security:http pattern="/libs/**" security="none"/>
+    <security:http pattern="/index.html" security="none"/>
+    <security:http pattern="/login.html" security="none"/>
+    <security:http pattern="/reg.html" security="none"/>
+    <security:http pattern="/forget_password.html" security="none"/>
+    <security:http pattern="/itemdetail.html" security="none"/>
+    <security:http pattern="/center.html" security="none"/>
 
 
     <!--配置用户认证
@@ -35,13 +41,7 @@
         access:允许什么类型的角色-->
         <!--用户权限-->
         <security:intercept-url
-                pattern="/user/**"
-                access="hasAnyRole('ROLE_USER')"></security:intercept-url>
-        <security:intercept-url
-                pattern="/item/**"
-                access="hasAnyRole('ROLE_USER')"></security:intercept-url>
-        <security:intercept-url
-                pattern="/comment/**"
+                pattern="/**"
                 access="hasAnyRole('ROLE_USER')"></security:intercept-url>
 
         <!--配置用户登录信息
