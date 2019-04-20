@@ -4,4 +4,7 @@ import com.tradingPlatform.bean.TbUser;
 import com.tradingPlatform.util.BaseService;
 
 public interface UserService extends BaseService<TbUser> {
+
+    TbUser findUserByPhone(String phone);
+
 }

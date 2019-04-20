@@ -5,8 +5,13 @@ import com.tradingPlatform.service.UserService;
 import com.tradingPlatform.util.PhoneFormatCheckUtils;
 import com.tradingPlatform.vo.ResultInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.util.StringUtil;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = {"/user"})
@@ -15,23 +20,27 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/add")
-    public String test(@RequestParam Integer id) {
-        TbUser user = new TbUser();
-        user.setNickname("用户" + id).setPhone("158785859" + id).setPassword("12345678" + id);
-        userService.addService(user);
-        return "{'1':'你好'}";
+    /**
+     * 获取当前登录的用户名
+     *
+     * @return 用户名
+     */
+    @GetMapping("/getUsername")
+    public Map<String, Object> getUsername() {
+        Map<String, Object> map = new HashMap<String, Object>();
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        map.put("username", user.getUsername());
+        return map;
     }
 
     /**
      * 查一个用户
-     *
-     * @param userId
      * @return
      */
-    @GetMapping
-    public TbUser findById(@RequestParam("userId") Integer userId) {
-        return userService.findByPrimaryKeyService(userId);
+    @GetMapping("/getUser")
+    public TbUser findById() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userService.findUserByPhone(user.getUsername()).setPassword(null);
     }
 
     /**
@@ -46,8 +55,13 @@ public class UserController {
         if (!PhoneFormatCheckUtils.isPhoneLegal(user.getPhone())) {
             resultInfo.setMessage("手机号码格式错误!");
         } else {
-            if (StringUtil.isEmpty(user.getAvatar())) {
-                user.setAvatar("https://avatar.csdnimg.cn/b/5/c/1_hzllo_.jpg");
+
+            if (userService.findUserByPhone(user.getPhone()) != null) {
+                resultInfo.setMessage("该手机号已经被注册!");
+                return resultInfo;
+            }
+            if (StringUtil.isEmpty(user.getImage())) {
+                user.setImage("https://avatar.csdnimg.cn/b/5/c/1_hzllo_.jpg");
             }
             userService.addService(user);
             TbUser tbUser = userService.findByPrimaryKeyService(user.getUserId());
@@ -64,10 +78,15 @@ public class UserController {
      * @param user
      * @return
      */
-    @PutMapping
-    public TbUser update(@RequestBody TbUser user) {
+    @PostMapping("update")
+    public ResultInfo update(@RequestBody TbUser user) {
+        ResultInfo resultInfo = ResultInfo.failure("修改失败！");
         userService.updateService(user);
-        return userService.findByPrimaryKeyService(user.getUserId());
+        TbUser tbUser = userService.findByPrimaryKeyService(user.getUserId());
+        if (tbUser != null) {
+            resultInfo = ResultInfo.success("修改成功!", tbUser);
+        }
+        return resultInfo;
     }
 
 }

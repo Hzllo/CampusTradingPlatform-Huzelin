@@ -7,8 +7,13 @@
 		<title>看看</title>
 		<link href="css/mui.min.css" rel="stylesheet" />
 		<link href="css/app.css" rel="stylesheet" type="text/css"/>
+		<script src="js/angular.min.js"></script>
+		<script src="js/base.js"></script>
+		<script src="js/service/userService.js"></script>
+		<script src="js/service/itemService.js"></script>
+		<script src="js/controller/userController.js"></script>
 	</head>
-	<body>
+	<body ng-app="kankan" ng-controller="userController" ng-init="getUser()">
 		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">个人中心</h1>
@@ -17,10 +22,10 @@
 			<ul class="mui-table-view mui-table-view-chevron">
 				<li class="mui-table-view-cell mui-media">
                     <a class="mui-navigate-right" href="setting.html">
-						<img class="mui-media-object mui-pull-left head-img" id="head-img" src="images/qq.png">
+						<img class="mui-media-object mui-pull-left head-img" id="head-img" href="{{user.image}}">
 						<div class="mui-media-body">
-							测试账号
-							<p class='mui-ellipsis'>江山如此多娇</p>
+							{{user.username}}
+							<p class='mui-ellipsis'></p>
 						</div>
 					</a>
 				</li>

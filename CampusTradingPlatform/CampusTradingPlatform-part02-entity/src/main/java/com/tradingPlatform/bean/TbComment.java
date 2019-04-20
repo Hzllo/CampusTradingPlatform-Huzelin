@@ -24,6 +24,8 @@ public class TbComment implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer commentId;
 
+    private String nickname;
+
     private Integer userId;
 
     private Integer itemId;

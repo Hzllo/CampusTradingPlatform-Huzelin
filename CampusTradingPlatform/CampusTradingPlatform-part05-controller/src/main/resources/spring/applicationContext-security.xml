@@ -21,6 +21,9 @@
     <security:http pattern="/forget_password.html" security="none"/>
     <security:http pattern="/itemdetail.html" security="none"/>
     <security:http pattern="/center.html" security="none"/>
+    <security:http pattern="/user/getUserName.do" security="none"/>
+    <security:http pattern="/favicon.ico" security="none"/>
+    <security:http pattern="/user/reg.do" security="none"/>
 
 
     <!--配置用户认证
@@ -50,7 +53,7 @@
         authentication-failure-url:登录失败跳转的页面-->
         <security:form-login
                 login-page="/login.html"
-                default-target-url="/index.html"
+                default-target-url="/reg.html"
                 authentication-failure-url="/login.html"></security:form-login>
 
         <!--配置用户登出信息

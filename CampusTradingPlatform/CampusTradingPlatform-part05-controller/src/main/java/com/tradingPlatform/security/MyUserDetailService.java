@@ -19,16 +19,17 @@ public class MyUserDetailService implements UserDetailsService {
 
 
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String phone) throws UsernameNotFoundException {
 
         List<GrantedAuthority> authorityList = new ArrayList<>();
 
-        TbUser user = userService.findByPrimaryKeyService(Integer.valueOf(s));
+        TbUser user = userService.findUserByPhone(phone);
 
         if (user != null) {
             authorityList.add(new SimpleGrantedAuthority("ROLE_USER"));
+            String password = "{noop}" + user.getPassword();
             return new org.springframework.security.core.userdetails.User
-                    (user.getNickname(), "{NONE}" + user.getPassword(), authorityList);
+                    (user.getNickname(), password, authorityList);
         }
         return null;
     }

@@ -23,7 +23,7 @@ public class TbUser implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
 
-    private String avatar;
+    private String image;
 
     private String nickname;
 
