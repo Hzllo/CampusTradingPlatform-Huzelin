@@ -4,34 +4,55 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title></title>
+		<title>看看</title>
 		<link href="css/mui.min.css" rel="stylesheet" />
-
-		<style>
-			ul {
-				font-size: 14px;
-				color: #8f8f94;
-			}
-			.mui-btn {
-				padding: 10px;
-			}
-		</style>
+		<link href="css/app.css" rel="stylesheet" type="text/css"/>
 	</head>
-
-	<body class="mui-fullscreen">
+	<body>
 		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">个人中心</h1>
 		</header>
 		<div class="mui-content">
-			
-			
-			
-			<div class="mui-content-padded">
-                <button id='logout' class="mui-btn mui-btn-red mui-btn-block">注销登录</button>
-			</div>
+			<ul class="mui-table-view mui-table-view-chevron">
+				<li class="mui-table-view-cell mui-media">
+					<a class="mui-navigate-right" href="#account">
+						<img class="mui-media-object mui-pull-left head-img" id="head-img" src="images/qq.png">
+						<div class="mui-media-body">
+							测试账号
+							<p class='mui-ellipsis'>江山如此多娇</p>
+						</div>
+					</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view mui-table-view-chevron">
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="inputItem.html">上传商品</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view mui-table-view-chevron">
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="information.html">新消息<span
+							class="mui-badge mui-badge-danger">45</span></a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="youthink.html">我的想要</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="myItem.html">我上传的商品</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view mui-table-view-chevron">
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="#about">关于看看<i class="mui-pull-right">By 广西科技大学</i></a>
+				</li>
+			</ul>
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell" style="text-align: center;">
+					<a>退出登录</a>
+				</li>
+			</ul>
 		</div>
-		
 		<script src="js/mui.min.js"></script>
 		<script src="js/app.js"></script>
 	</body>
