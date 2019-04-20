@@ -42,7 +42,7 @@ app.controller("userController", function ($scope, userService, itemService) {
             if (result.status) {
                 mui.confirm('注册成功', '恭喜你', btnArray, function (e) {
                     if (e.index == 0) {
-                        location.href = "/reg.html";
+                        location.href = "login.html";
                     }
                 })
             } else {
@@ -51,6 +51,7 @@ app.controller("userController", function ($scope, userService, itemService) {
                     }
                 })
             }
+            location.href = "login.html";
         })
     }
 

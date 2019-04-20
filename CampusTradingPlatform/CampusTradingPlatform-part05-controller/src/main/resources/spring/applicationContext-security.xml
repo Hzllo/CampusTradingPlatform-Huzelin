@@ -53,7 +53,7 @@
         authentication-failure-url:登录失败跳转的页面-->
         <security:form-login
                 login-page="/login.html"
-                default-target-url="/reg.html"
+                default-target-url="/loginSuccess.html"
                 authentication-failure-url="/login.html"></security:form-login>
 
         <!--配置用户登出信息

@@ -2,6 +2,7 @@ package com.tradingPlatform.controller;
 
 import com.tradingPlatform.bean.TbUser;
 import com.tradingPlatform.service.UserService;
+import com.tradingPlatform.util.MD5Util;
 import com.tradingPlatform.util.PhoneFormatCheckUtils;
 import com.tradingPlatform.vo.ResultInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ public class UserController {
 
     /**
      * 查一个用户
+     *
      * @return
      */
     @GetMapping("/getUser")
@@ -63,7 +65,8 @@ public class UserController {
             if (StringUtil.isEmpty(user.getImage())) {
                 user.setImage("https://avatar.csdnimg.cn/b/5/c/1_hzllo_.jpg");
             }
-            userService.addService(user);
+            String md5password = MD5Util.md5(user.getPassword());
+            userService.addService(user.setPassword(md5password));
             TbUser tbUser = userService.findByPrimaryKeyService(user.getUserId());
             if (tbUser != null) {
                 resultInfo.setStatus(true).setMessage("注册成功").setObject(tbUser);

@@ -27,7 +27,7 @@ public class MyUserDetailService implements UserDetailsService {
 
         if (user != null) {
             authorityList.add(new SimpleGrantedAuthority("ROLE_USER"));
-            String password = "{noop}" + user.getPassword();
+            String password = "{MD5}" + user.getPassword();
             return new org.springframework.security.core.userdetails.User
                     (user.getNickname(), password, authorityList);
         }
