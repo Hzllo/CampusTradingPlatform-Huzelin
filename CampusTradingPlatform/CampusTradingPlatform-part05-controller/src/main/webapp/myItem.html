@@ -8,6 +8,13 @@
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
     <!--标准mui.css-->
     <link href="css/mui.min.css" rel="stylesheet">
+    <script src="js/angular.min.js"></script>
+    <script src="js/base.js"></script>
+    <script src="js/service/itemService.js"></script>
+    <script src="js/controller/itemController.js"></script>
+    <script src="js/mui.min.js"></script>
+    <script src="js/mui.zoom.js"></script>
+    <script src="js/mui.previewimage.js"></script>
     <!--App自定义的css-->
     <style type="text/css">
         .mui-preview-image.mui-fullscreen {
@@ -202,7 +209,7 @@
     </style>
 </head>
 
-<body>
+<body ng-app="kankan" ng-controller="itemController" ng-init="">
 <header class="mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title">我上传的商品</h1>
@@ -245,23 +252,10 @@
     </div>
 
 </div>
-<script src="js/mui.min.js"></script>
-<script src="js/mui.zoom.js"></script>
-<script src="js/mui.previewimage.js"></script>
 <script charset="utf-8" type="text/javascript">
     mui.init({
         swipeBack: true //启用右滑关闭功能
     });
-    document.getElementById("delete").addEventListener('tap', function (e) {
-        e.detail.gesture.preventDefault();
-        var btnArray = ['确定', '取消'];
-        mui.prompt('我要吐槽：', ' ', ' ', btnArray, function (e) {
-            if (e.index == 0) {
-            } else {
-            }
-        })
-    });
-
 </script>
 </body>
 </html>
