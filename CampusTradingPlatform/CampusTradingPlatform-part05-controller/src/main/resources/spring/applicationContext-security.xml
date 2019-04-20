@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security.xsd ">
+
+    <bean id="userDetailService" class="com.tradingPlatform.security.MyUserDetailService"/>
+
+    <!--哪些资源是不需要登录可以访问-->
+    <security:http pattern="/css/**" security="none"/>
+    <security:http pattern="/images/**" security="none"/>
+    <security:http pattern="/fonts/**" security="none"/>
+    <security:http pattern="/js/**" security="none"/>
+    <security:http pattern="/libs/**" security="none"/>
+
+
+    <!--配置用户认证
+    user-service-ref:自定义用户授权信息-->
+    <security:authentication-manager>
+        <security:authentication-provider
+                user-service-ref="userDetailService">
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+    <!--配置授权信息
+    auto-config:开启自动配置
+    use-expressions:使用SpEL表达式-->
+    <security:http auto-config="true">
+
+        <!--配置权限相关信息
+        pattern:拦截的请求
+        access:允许什么类型的角色-->
+        <!--用户权限-->
+        <security:intercept-url
+                pattern="/user/**"
+                access="hasAnyRole('ROLE_USER')"></security:intercept-url>
+        <security:intercept-url
+                pattern="/item/**"
+                access="hasAnyRole('ROLE_USER')"></security:intercept-url>
+        <security:intercept-url
+                pattern="/comment/**"
+                access="hasAnyRole('ROLE_USER')"></security:intercept-url>
+
+        <!--配置用户登录信息
+        login-page:登录的页面
+        default-target-url:登录成功跳转的页面
+        authentication-failure-url:登录失败跳转的页面-->
+        <security:form-login
+                login-page="/login.html"
+                default-target-url="/index.html"
+                authentication-failure-url="/login.html"></security:form-login>
+
+        <!--配置用户登出信息
+        logout-success-url:登出成功跳转的页面
+        invalidate-session:是否销毁session-->
+        <security:logout
+                logout-success-url="/index.html"
+                invalidate-session="true"></security:logout>
+
+        <!--关闭csrf请求伪造-->
+        <security:csrf disabled="true"></security:csrf>
+
+        <!--配置403提示界面
+        error-page:错误页面-->
+        <security:access-denied-handler
+                error-page="/login.html"></security:access-denied-handler>
+
+    </security:http>
+
+</beans>
