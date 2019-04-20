@@ -2,6 +2,8 @@ package com.tradingPlatform.controller;
 
 import com.tradingPlatform.bean.TbUser;
 import com.tradingPlatform.service.UserService;
+import com.tradingPlatform.util.PhoneFormatCheckUtils;
+import com.tradingPlatform.vo.ResultInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.util.StringUtil;
@@ -39,23 +41,21 @@ public class UserController {
      * @return
      */
     @PostMapping("reg")
-    public TbUser save(@RequestBody TbUser user) {
-        if (StringUtil.isEmpty(user.getAvatar())) {
-            user.setAvatar("https://avatar.csdnimg.cn/b/5/c/1_hzllo_.jpg");
+    public ResultInfo save(@RequestBody TbUser user) {
+        ResultInfo resultInfo = new ResultInfo(false, "注册失败", null);
+        if (!PhoneFormatCheckUtils.isPhoneLegal(user.getPhone())) {
+            resultInfo.setMessage("手机号码格式错误!");
+        } else {
+            if (StringUtil.isEmpty(user.getAvatar())) {
+                user.setAvatar("https://avatar.csdnimg.cn/b/5/c/1_hzllo_.jpg");
+            }
+            userService.addService(user);
+            TbUser tbUser = userService.findByPrimaryKeyService(user.getUserId());
+            if (tbUser != null) {
+                resultInfo.setStatus(true).setMessage("注册成功").setObject(tbUser);
+            }
         }
-        userService.addService(user);
-
-        return userService.findByPrimaryKeyService(user.getUserId());
-    }
-
-    /**
-     * 删除用户
-     *
-     * @param userId
-     */
-    @DeleteMapping
-    public void delete(@RequestParam Integer userId) {
-        userService.deleteByPrimaryKeyService(userId);
+        return resultInfo;
     }
 
     /**

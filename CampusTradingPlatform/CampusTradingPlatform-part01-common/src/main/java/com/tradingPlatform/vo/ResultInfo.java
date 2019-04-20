@@ -26,23 +26,26 @@ public class ResultInfo implements Serializable {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public ResultInfo setStatus(boolean status) {
         this.status = status;
+        return this;
     }
 
     public String getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
+    public ResultInfo setMessage(String message) {
         this.message = message;
+        return this;
     }
 
     public Object getObject() {
         return object;
     }
 
-    public void setObject(Object object) {
+    public ResultInfo setObject(Object object) {
         this.object = object;
+        return this;
     }
 }
