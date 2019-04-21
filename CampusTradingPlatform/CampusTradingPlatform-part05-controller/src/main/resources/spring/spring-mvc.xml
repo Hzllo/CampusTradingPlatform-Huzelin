@@ -14,15 +14,23 @@
        http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!--配置注解驱动,加载适配器与映射器-->
-    <mvc:annotation-driven>
+    <mvc:annotation-driven conversion-service="conversionService_one">
         <!--配置将java对象转换为json对象互转的工具类-->
         <mvc:message-converters register-defaults="true">
             <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
                 <property name="supportedMediaTypes" value="application/json"/>
             </bean>
         </mvc:message-converters>
-
     </mvc:annotation-driven>
+
+    <!--转换器-->
+    <bean id="conversionService_one" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="com.tradingPlatform.converter.DateConverter"></bean>
+            </set>
+        </property>
+    </bean>
 
     <!--包扫描配置-->
     <context:component-scan base-package="com.tradingPlatform"/>
