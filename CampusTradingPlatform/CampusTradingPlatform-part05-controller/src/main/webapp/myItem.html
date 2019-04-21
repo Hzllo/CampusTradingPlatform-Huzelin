@@ -215,10 +215,12 @@
 </header>
 <div class="mui-content">
     <div class="mui-card" ng-repeat="item in items">
+        <div class="mui-card-header">标题：{{item.title}}</div>
         <div class="mui-card-content">
             <img alt="" src="{{item.imageUrl}}" width="100%"/>
         </div>
         <div class="mui-card-content-inner">
+            <p>上传时间：{{item.time}}</p>
             {{item.content}}
         </div>
         <div class="mui-card-content-inner">

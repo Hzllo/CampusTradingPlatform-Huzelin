@@ -68,7 +68,13 @@ public class ItemController {
     public ResultInfo save(@RequestBody TbItem item) {
         ResultInfo resultInfo = new ResultInfo(false, "增加失败!", null);
         if (StringUtils.isEmpty(item.getImageUrl())) {
-            return resultInfo.setMessage("请选择一张图片");
+            return resultInfo.setMessage("请选择一张图片！");
+        }
+        if (StringUtils.isEmpty(item.getContent())) {
+            return resultInfo.setMessage("请输入内容！");
+        }
+        if (StringUtils.isEmpty(item.getTitle())) {
+            return resultInfo.setMessage("请输入标题！");
         }
         TbUser tbUser = holdUser();
         item.setTime(new Date());
