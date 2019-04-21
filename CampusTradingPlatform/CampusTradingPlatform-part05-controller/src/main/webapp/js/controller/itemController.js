@@ -5,7 +5,7 @@ app.controller("itemController", function ($scope, itemService) {
         itemService.uploadFile().success(function (result) {
             var btnArray = ['确定'];
             if (result.status) {
-                $scope.item.imageUrl = result.object;
+                $scope.imageUrl = result.object;
                 mui.confirm(result.message, '上传成功!', btnArray, function (e) {
                     if (e.index == 0) {
                     }
@@ -22,19 +22,22 @@ app.controller("itemController", function ($scope, itemService) {
     }
 
     //下架商品
-    $scope.deleteItem = function () {
+    $scope.deleteItem = function (id) {
         var btnArray = ['是', '否'];
         mui.confirm('确定下架该商品?', '警告', btnArray, function (e) {
             if (e.index == 0) {
-                itemService.deleteItem().success(function (result) {
+                itemService.deleteItem(id).success(function (result) {
+                    window.location.reload(true);
                 })
             } else {
             }
         })
     }
 
+    $scope.item = new Object();
     //上架商品
     $scope.addItem = function () {
+        $scope.item.imageUrl = $scope.imageUrl;
         itemService.add($scope.item).success(function (result) {
             var btnArray = ['确定'];
             if (result.status) {

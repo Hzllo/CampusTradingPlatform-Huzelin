@@ -76,6 +76,9 @@ public class ItemController {
         if (StringUtils.isEmpty(item.getTitle())) {
             return resultInfo.setMessage("请输入标题！");
         }
+        if (item.getTitle().length() > 12) {
+            return resultInfo.setMessage("标题过长！");
+        }
         TbUser tbUser = holdUser();
         item.setTime(new Date());
         item.setUserId(tbUser.getUserId());

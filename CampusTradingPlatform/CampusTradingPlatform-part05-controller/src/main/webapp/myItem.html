@@ -220,7 +220,7 @@
             <img alt="" src="{{item.imageUrl}}" width="100%"/>
         </div>
         <div class="mui-card-content-inner">
-            <p>上传时间：{{item.time}}</p>
+            <p>上传时间：{{item.time|date:'yyyy-MM-dd HH:mm:ss'}}</p>
             {{item.content}}
         </div>
         <div class="mui-card-content-inner">
@@ -246,7 +246,8 @@
             </ul>
         </div>
         <div class="mui-card-footer">
-            <button class="mui-btn mui-btn-danger" id='delete' ng-click="deleteItem()" type="button">下架</button>
+            <button class="mui-btn mui-btn-danger" id='delete' ng-click="deleteItem(item.itemId)" type="button">下架
+            </button>
         </div>
     </div>
 

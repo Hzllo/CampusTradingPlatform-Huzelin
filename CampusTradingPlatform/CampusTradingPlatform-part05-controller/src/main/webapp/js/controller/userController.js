@@ -7,7 +7,7 @@ app.controller("userController", function ($scope, userService, itemService) {
         })
     };
 
-    //获取用户名
+    //获取用户
     $scope.getUser = function () {
         userService.getUser().success(function (result) {
             $scope.user = result;
@@ -51,13 +51,6 @@ app.controller("userController", function ($scope, userService, itemService) {
                     }
                 })
             }
-        })
-    }
-
-    //获取所有商品
-    $scope.finAllItem = function () {
-        itemService.getItems().success(function (result) {
-            $scope.items = result;
         })
     }
 })
