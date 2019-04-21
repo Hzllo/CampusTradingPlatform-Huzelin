@@ -30,6 +30,8 @@ public class TbItem implements Serializable {
 
     private String content;
 
+    private String title;
+
     private String imageUrl;
 
 }
