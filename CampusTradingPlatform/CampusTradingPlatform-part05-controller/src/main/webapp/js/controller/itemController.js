@@ -55,6 +55,10 @@ app.controller("itemController", function ($scope, itemService) {
         })
     }
 
+    //商品详情
+    $scope.itemDetail = function () {
+
+    }
 
     //获取所有商品
     $scope.finAllItem = function () {
