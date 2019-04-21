@@ -5,6 +5,7 @@ import com.tradingPlatform.util.BaseService;
 
 public interface UserService extends BaseService<TbUser> {
 
-    TbUser findUserByPhone(String phone);
+    TbUser findUserByUserName(String phone);
 
+    TbUser findUserByPhone(String phone);
 }

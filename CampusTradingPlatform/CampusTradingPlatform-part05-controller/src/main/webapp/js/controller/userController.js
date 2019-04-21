@@ -1,8 +1,8 @@
 app.controller("userController", function ($scope, userService, itemService) {
 
     //获取用户名
-    $scope.getUsername = function () {
-        userService.getUsername().success(function (result) {
+    $scope.getName = function () {
+        userService.getName().success(function (result) {
             $scope.username = result.username;
         })
     };
@@ -51,7 +51,6 @@ app.controller("userController", function ($scope, userService, itemService) {
                     }
                 })
             }
-            location.href = "login.html";
         })
     }
 

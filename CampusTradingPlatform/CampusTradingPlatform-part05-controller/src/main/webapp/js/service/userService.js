@@ -1,7 +1,7 @@
 app.service("userService", function ($http) {
 
     //获取用户名
-    this.getUsername = function () {
+    this.getName = function () {
         return $http.get("user/getUsername.do?time=" + Math.random());
     }
 

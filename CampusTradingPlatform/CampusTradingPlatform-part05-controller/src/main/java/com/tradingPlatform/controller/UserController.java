@@ -42,7 +42,7 @@ public class UserController {
     @GetMapping("/getUser")
     public TbUser findById() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userService.findUserByPhone(user.getUsername()).setPassword(null);
+        return userService.findUserByUserName(user.getUsername()).setPassword(null);
     }
 
     /**
@@ -57,7 +57,14 @@ public class UserController {
         if (!PhoneFormatCheckUtils.isPhoneLegal(user.getPhone())) {
             resultInfo.setMessage("手机号码格式错误!");
         } else {
-
+            if (user.getUsername().length() > 7) {
+                resultInfo.setMessage("用户名太长!");
+                return resultInfo;
+            }
+            if (userService.findUserByUserName(user.getUsername()) != null) {
+                resultInfo.setMessage("用户名已注册!");
+                return resultInfo;
+            }
             if (userService.findUserByPhone(user.getPhone()) != null) {
                 resultInfo.setMessage("该手机号已经被注册!");
                 return resultInfo;

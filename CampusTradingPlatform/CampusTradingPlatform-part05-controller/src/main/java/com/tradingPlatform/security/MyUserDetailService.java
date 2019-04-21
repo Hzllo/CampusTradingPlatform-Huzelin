@@ -29,7 +29,7 @@ public class MyUserDetailService implements UserDetailsService {
             authorityList.add(new SimpleGrantedAuthority("ROLE_USER"));
             String password = "{MD5}" + user.getPassword();
             return new org.springframework.security.core.userdetails.User
-                    (user.getNickname(), password, authorityList);
+                    (user.getUsername(), password, authorityList);
         }
         return null;
     }

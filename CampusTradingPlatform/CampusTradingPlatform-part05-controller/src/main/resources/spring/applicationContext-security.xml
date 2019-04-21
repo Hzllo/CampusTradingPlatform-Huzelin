@@ -21,7 +21,6 @@
     <security:http pattern="/forget_password.html" security="none"/>
     <security:http pattern="/itemdetail.html" security="none"/>
     <security:http pattern="/center.html" security="none"/>
-    <security:http pattern="/user/getUserName.do" security="none"/>
     <security:http pattern="/favicon.ico" security="none"/>
     <security:http pattern="/user/reg.do" security="none"/>
 
@@ -52,8 +51,8 @@
         default-target-url:登录成功跳转的页面
         authentication-failure-url:登录失败跳转的页面-->
         <security:form-login
-                login-page="/login.html"
-                default-target-url="/loginSuccess.html"
+                login-page="/login.html" default-target-url="/loginSuccess.html"
+                authentication-success-forward-url="/index.html"
                 authentication-failure-url="/login.html"></security:form-login>
 
         <!--配置用户登出信息

@@ -12,6 +12,12 @@
     <link href="css/mui.min.css" rel="stylesheet">
     <!--App自定义的css-->
     <link href="../css/app.css" rel="stylesheet" type="text/css"/>
+
+    <script src="js/angular.min.js"></script>
+    <script src="js/base.js"></script>
+    <script src="js/service/userService.js"></script>
+    <script src="js/service/itemService.js"></script>
+    <script src="js/controller/userController.js"></script>
     <style>
         .mui-table h4, .mui-table h5, .mui-table .mui-h5, .mui-table .mui-h6, .mui-table p {
             margin-top: 0;
@@ -34,7 +40,7 @@
     </style>
 </head>
 
-<body>
+<body ng-app="kankan" ng-controller="userController" ng-init="getName()">
 <header class="mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title">消息</h1>

@@ -15,6 +15,20 @@ public class UserServiceImpl extends BaseServiceImpl<TbUser> implements UserServ
     private UserMapper userMapper;
 
     /**
+     * 根据用户名获取用户
+     *
+     * @param name
+     * @return
+     */
+    @Override
+    public TbUser findUserByUserName(String name) {
+        Example example = new Example(TbUser.class);
+        Example.Criteria criteria = example.createCriteria().andEqualTo("username", name);
+        TbUser user = userMapper.selectOneByExample(example);
+        return user;
+    }
+
+    /**
      * 根据手机号码获取用户
      *
      * @param phone
@@ -22,6 +36,7 @@ public class UserServiceImpl extends BaseServiceImpl<TbUser> implements UserServ
      */
     @Override
     public TbUser findUserByPhone(String phone) {
+
         Example example = new Example(TbUser.class);
         Example.Criteria criteria = example.createCriteria().andEqualTo("phone", phone);
         TbUser user = userMapper.selectOneByExample(example);
