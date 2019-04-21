@@ -14,4 +14,12 @@ public interface ItemService extends BaseService<TbItem> {
      * @return
      */
     List<TbItem> findAllItems(Integer userId);
+
+    /**
+     * 首页发现商品
+     *
+     * @param type 类型
+     * @return
+     */
+    List<TbItem> anyItems(Integer type);
 }

@@ -23,6 +23,7 @@
     <security:http pattern="/center.html" security="none"/>
     <security:http pattern="/favicon.ico" security="none"/>
     <security:http pattern="/user/reg.do" security="none"/>
+    <security:http pattern="/item/anyItems.do" security="none"/>
 
 
     <!--配置用户认证

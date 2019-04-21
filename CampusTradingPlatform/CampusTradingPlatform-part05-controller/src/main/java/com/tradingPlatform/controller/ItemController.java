@@ -36,7 +36,7 @@ public class ItemController {
     }
 
     /**
-     * 查一个
+     * 查多个
      *
      * @return
      */
@@ -45,6 +45,19 @@ public class ItemController {
         ResultInfo resultInfo = new ResultInfo(true, "成功!", null);
         TbUser user = holdUser();
         List<TbItem> itemList = itemService.findAllItems(user.getUserId());
+        return resultInfo.setObject(itemList);
+    }
+
+
+    /**
+     * 查多个
+     *
+     * @return
+     */
+    @GetMapping("anyItems")
+    public ResultInfo anyItems(@RequestParam Integer type) {
+        ResultInfo resultInfo = new ResultInfo(true, "成功!", null);
+        List<TbItem> itemList = itemService.anyItems(type);
         return resultInfo.setObject(itemList);
     }
 
