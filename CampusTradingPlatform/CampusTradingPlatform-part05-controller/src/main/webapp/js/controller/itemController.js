@@ -1,4 +1,4 @@
-app.controller("itemController", function ($scope, itemService) {
+app.controller("itemController", function ($scope, $location, itemService) {
 
     //上传商品图片
     $scope.uploadFile = function () {
@@ -57,7 +57,7 @@ app.controller("itemController", function ($scope, itemService) {
 
     //商品详情
     $scope.itemDetail = function () {
-
+        $scope.itemId = $location.search()["itemId"];
     }
 
     //获取所有商品
