@@ -20,6 +20,11 @@ app.service("itemService", function ($http) {
         return $http.get("item/findAll.do?time=" + Math.random());
     }
 
+    //首页商品
+    this.anyItems = function (type) {
+        return $http.get("item/anyItems.do?type=" + type);
+    }
+
     //上传商品
     this.add = function (entity) {
         return $http.post("item/addItem.do", entity);

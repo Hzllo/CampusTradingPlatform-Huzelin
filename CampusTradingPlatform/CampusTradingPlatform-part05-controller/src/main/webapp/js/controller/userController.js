@@ -53,4 +53,12 @@ app.controller("userController", function ($scope, userService, itemService) {
             }
         })
     }
+
+    //获取所有商品
+    $scope.anyItems = function (type) {
+        itemService.anyItems(type).success(function (result) {
+            $scope.items = result.object;
+        })
+    };
+
 })
