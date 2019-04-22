@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>看看-商品详情</title>
+    <meta name="referrer" content="no-referrer">
     <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
@@ -11,6 +12,7 @@
     <script src="js/angular.min.js"></script>
     <script src="js/base.js"></script>
     <script src="js/service/itemService.js"></script>
+    <script src="js/service/commentService.js"></script>
     <script src="js/controller/itemController.js"></script>
     <!--App自定义的css-->
     <style type="text/css">
@@ -116,18 +118,18 @@
 <div class="mui-content">
     <div class="mui-card">
         <div class="mui-card-header mui-card-media">
-            <img src="images/qq.png"/>
+            <img src="{{object.user.image}}"/>
             <div class="mui-media-body">
-                小M {{itemId}}
-                <p>发表于{{item.time|date:'yyyy-MM-dd HH:mm:ss'}}</p>
+                {{object.user.username}}
+                <p>发表于{{object.time|date:'yyyy-MM-dd HH:mm:ss'}}</p>
             </div>
         </div>
-        <div class="mui-card-header"><label style="font-size: small">{{item.title}}</label></div>
+        <div class="mui-card-header"><label style="font-size: small">{{object.title}}</label></div>
         <div class="mui-card-content">
-            <img alt="" src="{{item.imageUrl}}" width="100%"/>
+            <img alt="" src="{{object.imageUrl}}" width="100%"/>
         </div>
         <div class="mui-card-content-inner">
-            {{item.content}}
+            {{object.content}}
         </div>
     </div>
 </div>
@@ -135,30 +137,20 @@
     <div class="mui-card-content">
         <div class="mui-card-content-inner">
             <ul class="mui-table-view mui-unfold">
-                <li class="mui-table-view-cell mui-media mui-media-icon">
-                    <p class="mui-pull-left">幸福: </p>
-                    <div class="mui-media-body">
-                        这件东西不错啊!但是开什么玩笑????卖这么贵还还不如买新的呢!!
+                <li class="mui-table-view-cell mui-media mui-media-icon" ng-repeat="comment in object.comments">
+                    <div class="mui-media-object mui-pull-left"><span class="">{{comment.username}}: </span>
                     </div>
-                </li>
-                <li class="mui-table-view-cell mui-media mui-media-icon">
-                    <p class="mui-pull-left">幸福: </p>
                     <div class="mui-media-body">
-                        这件东西不错啊!但是开什么玩笑????卖这么贵还还不如买新的呢!!
-                    </div>
-                </li>
-                <li class="mui-table-view-cell mui-media mui-media-icon">
-                    <p class="mui-pull-left">幸福: </p>
-                    <div class="mui-media-body">
-                        这件东西不错啊!但是开什么玩笑????卖这么贵还还不如买新的呢!!
+                        {{comment.content}}
+                        <label class="mui-pull-right">{{comment.time|date:'MM-dd HH:mm'}}</label>
                     </div>
                 </li>
             </ul>
         </div>
     </div>
     <div class="mui-card-footer">
-        <button class="mui-btn mui-btn-blue mui-btn-outlined" id='thinkTo' type="button">想要</button>
-        <button class="mui-btn mui-btn-blue mui-btn-outlined" id='promptBtn' type="button">评论</button>
+        <button class="mui-btn mui-btn-blue mui-btn-outlined" ng-click="commentItem(1)" type="button">想要</button>
+        <button class="mui-btn mui-btn-blue mui-btn-outlined" ng-click="commentItem(2)" type="button">评论</button>
         <div id="info"></div>
     </div>
 </div>
@@ -168,28 +160,6 @@
 <script charset="utf-8" type="text/javascript">
     mui.init({
         swipeBack: true //启用右滑关闭功能
-    });
-    document.getElementById("promptBtn").addEventListener('tap', function (e) {
-        e.detail.gesture.preventDefault();
-        var btnArray = ['确定', '取消'];
-        mui.prompt('我要吐槽：', ' ', ' ', btnArray, function (e) {
-            if (e.index == 0) {
-                info.innerText = e.value;
-            } else {
-                info.innerText = '';
-            }
-        })
-    });
-    document.getElementById("thinkTo").addEventListener('tap', function (e) {
-        e.detail.gesture.preventDefault();
-        var btnArray = ['确定', '取消'];
-        mui.prompt('请留下联系方式：', 'QQ号或者微信', '给他私信', btnArray, function (e) {
-            if (e.index == 0) {
-                info.innerText = e.value;
-            } else {
-                info.innerText = '';
-            }
-        })
     });
 </script>
 </body>

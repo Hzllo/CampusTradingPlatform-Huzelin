@@ -15,7 +15,7 @@ app.service("itemService", function ($http) {
         });
     };
 
-    //获取商品
+    //获取多个商品
     this.getItems = function () {
         return $http.get("item/findAll.do?time=" + Math.random());
     }
@@ -23,6 +23,11 @@ app.service("itemService", function ($http) {
     //首页商品
     this.anyItems = function (type) {
         return $http.get("item/anyItems.do?type=" + type);
+    }
+
+    //单个商品详情
+    this.itemDetail = function (id) {
+        return $http.get("item/getItem.do?itemId=" + id);
     }
 
     //上传商品

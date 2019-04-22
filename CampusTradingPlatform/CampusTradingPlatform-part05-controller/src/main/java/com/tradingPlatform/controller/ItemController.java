@@ -1,10 +1,14 @@
 package com.tradingPlatform.controller;
 
+import com.tradingPlatform.bean.TbComment;
 import com.tradingPlatform.bean.TbItem;
+import com.tradingPlatform.bean.TbItemDetailVO;
 import com.tradingPlatform.bean.TbUser;
+import com.tradingPlatform.service.CommentService;
 import com.tradingPlatform.service.ItemService;
 import com.tradingPlatform.service.UserService;
 import com.tradingPlatform.vo.ResultInfo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -24,6 +28,9 @@ public class ItemController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private CommentService commentService;
+
     /**
      * 查一个
      *
@@ -31,8 +38,15 @@ public class ItemController {
      * @return
      */
     @GetMapping("getItem")
-    public TbItem findById(@RequestParam("itemId") Integer itemId) {
-        return itemService.findByPrimaryKeyService(itemId);
+    public ResultInfo findById(@RequestParam("itemId") Integer itemId) {
+        ResultInfo resultInfo = new ResultInfo(true, "成功!", null);
+        TbItemDetailVO tbItemDetailVO = new TbItemDetailVO();
+        TbItem item = itemService.findByPrimaryKeyService(itemId);
+        BeanUtils.copyProperties(item, tbItemDetailVO);
+        TbUser tbUser = userService.findByPrimaryKeyService(item.getUserId());
+        tbItemDetailVO.setUser(tbUser.setPassword(null).setPhone(null));
+        List<TbComment> listByItemId = commentService.findListByItemId(itemId);
+        return resultInfo.setObject(tbItemDetailVO.setComments(listByItemId));
     }
 
     /**

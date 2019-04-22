@@ -1,4 +1,4 @@
-app.controller("itemController", function ($scope, $location, itemService) {
+app.controller("itemController", function ($scope, $location, itemService, commentService) {
 
     //上传商品图片
     $scope.uploadFile = function () {
@@ -19,6 +19,40 @@ app.controller("itemController", function ($scope, $location, itemService) {
         }).error(function () {
             alert("上传图片失败");
         });
+    }
+
+    //评论商品
+    $scope.commentItem = function (type) {
+        $scope.comment = new Object();
+        var str1 = "";
+        var str2 = "";
+        var str3 = "";
+        //私信
+        if (type == 1) {
+            str1 = "请留下联系方式：";
+            str2 = "QQ号或者微信";
+            str3 = "给他私信";
+        }
+        //评论
+        if (type == 2) {
+            str1 = "我要吐槽：";
+        }
+        var btnArray = ['确定', '取消'];
+        mui.prompt(str1, str2, str3, btnArray, function (e) {
+            if (e.index == 0) {
+                $scope.comment.content = e.value;
+                $scope.comment.type = type;
+                $scope.comment.itemId = $scope.object.itemId;
+                commentService.addComment($scope.comment).success(function (result) {
+                    if (result.status) {
+                        $scope.object.comments = result.object;
+                    }
+                })
+
+            } else {
+            }
+        })
+
     }
 
     //下架商品
@@ -57,7 +91,12 @@ app.controller("itemController", function ($scope, $location, itemService) {
 
     //商品详情
     $scope.itemDetail = function () {
-        $scope.itemId = $location.search()["itemId"];
+        var itemId = $location.search()["itemId"];
+        itemService.itemDetail(itemId).success(function (result) {
+            if (result.status) {
+                $scope.object = result.object;
+            }
+        })
     }
 
     //获取所有商品

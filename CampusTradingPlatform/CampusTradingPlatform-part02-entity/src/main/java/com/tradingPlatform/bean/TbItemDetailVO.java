@@ -11,22 +11,22 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @NoArgsConstructor
-@Table(name = "tb_item")
-public class TbItem implements Serializable {
+public class TbItemDetailVO implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer itemId;
 
     private Integer userId;
 
-    private Integer num;
+    private TbUser user;
+
+    private List<TbComment> comments;
 
     private Date time;
 
