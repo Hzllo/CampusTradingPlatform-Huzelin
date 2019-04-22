@@ -24,6 +24,8 @@
     <security:http pattern="/favicon.ico" security="none"/>
     <security:http pattern="/user/reg.do" security="none"/>
     <security:http pattern="/item/anyItems.do" security="none"/>
+    <security:http pattern="/item/getItem.do" security="none"/>
+    <security:http pattern="/item/getItem.do" security="none"/>
 
 
     <!--配置用户认证

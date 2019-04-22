@@ -138,9 +138,8 @@
         <div class="mui-card-content-inner">
             <ul class="mui-table-view mui-unfold">
                 <li class="mui-table-view-cell mui-media mui-media-icon" ng-repeat="comment in object.comments">
-                    <div class="mui-media-object mui-pull-left"><span class="">{{comment.username}}: </span>
-                    </div>
                     <div class="mui-media-body">
+                        {{comment.username}}:
                         {{comment.content}}
                         <label class="mui-pull-right">{{comment.time|date:'MM-dd HH:mm'}}</label>
                     </div>
