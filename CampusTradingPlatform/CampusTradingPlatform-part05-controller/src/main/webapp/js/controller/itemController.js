@@ -54,10 +54,16 @@ app.controller("itemController", function ($scope, $location, itemService, comme
                     } else {
                         mui.confirm(result.message, '失败!', btnArray, function (e) {
                             if (e.index == 0) {
-                                window.location.href = "login.html";
                             }
                         })
                     }
+                }).error(function () {
+                    mui.confirm('请先登录!', '注意!', btnArray, function (e) {
+                        if (e.index == 0) {
+                            window.location.href = "login.html";
+                        } else {
+                        }
+                    })
                 })
 
             } else {

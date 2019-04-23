@@ -49,7 +49,7 @@ public class ItemServiceImpl extends BaseServiceImpl<TbItem> implements ItemServ
         Example example = new Example(TbItem.class);
         //智能排序
         if (type == 1) {
-            example.orderBy("itemId").desc().orderBy("time").desc();
+            example.orderBy("num").asc().orderBy("time").desc();
         }
         //根据时间排序
         if (type == 2) {
@@ -57,6 +57,7 @@ public class ItemServiceImpl extends BaseServiceImpl<TbItem> implements ItemServ
         }
         //根据评论数排序
         if (type == 3) {
+            example.orderBy("num").desc();
         }
         Example.Criteria criteria = example.createCriteria();
         List<TbItem> itemList = itemMapper.selectByExample(example);

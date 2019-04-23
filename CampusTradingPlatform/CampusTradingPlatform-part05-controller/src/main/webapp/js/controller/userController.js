@@ -54,6 +54,14 @@ app.controller("userController", function ($scope, userService, itemService) {
         })
     }
 
+    //进入搜索页
+    $scope.search = function () {
+        if ($scope.searchContent == null) {
+            $scope.searchContent = "";
+        }
+        window.location.href = "search.html#?searchContent = " + $scope.searchContent;
+    }
+
     //获取所有商品
     $scope.anyItems = function (type) {
         itemService.anyItems(type).success(function (result) {

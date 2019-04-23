@@ -25,20 +25,21 @@
 <div class="mui-content">
     <div class="mui-card">
         <div class="mui-card-header">
-            <input type="search" class="mui-input-clear mui-indexed-list-search-input" placeholder="搜你所想">
+            <input type="search" class="mui-input-clear mui-indexed-list-search-input" ng-model="searchContent"
+                   ng-keypres="search()" placeholder="搜你所想">
         </div>
         <div class="mui-card-content">
             <div class="mui-card-content-inner">
                 <div id="sliderSegmentedControl"
                      class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
                     <div class="mui-scroll">
-                        <a class="mui-control-item mui-active" href="#item1mobile">
+                        <a class="mui-control-item mui-active" ng-click="anyItems(1)">
                             推荐
                         </a>
-                        <a class="mui-control-item" href="#item2mobile">
+                        <a class="mui-control-item" ng-click="anyItems(2)">
                             上新
                         </a>
-                        <a class="mui-control-item" href="#item3mobile">
+                        <a class="mui-control-item" ng-click="anyItems(3)">
                             最火
                         </a>
                         <a class="mui-control-item" href="#item3mobile">
