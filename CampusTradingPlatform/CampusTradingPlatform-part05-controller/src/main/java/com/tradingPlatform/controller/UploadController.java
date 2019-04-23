@@ -41,7 +41,7 @@ public class UploadController {
                 // 3.直接上传
                 String contextPath = request.getSession().getServletContext().getRealPath("/");
                 System.out.println("UploadController.upload:  图片路径  " + contextPath);
-                File file = new File("E:\\Java\\IdeaProjects\\CampusTradingPlatform-Huzelin\\CampusTradingPlatform\\CampusTradingPlatform-part05-controller\\src\\main\\webapp\\images\\" + newName);
+                File file = new File("D:\\IDEA_Projects\\CampusTradingPlatform-Huzelin\\CampusTradingPlatform\\CampusTradingPlatform-part05-controller\\src\\main\\webapp\\images\\" + newName);
                 up_img_WU_FILE_0.transferTo(file);
                 //4.文件名称
                 System.out.println(newName);
