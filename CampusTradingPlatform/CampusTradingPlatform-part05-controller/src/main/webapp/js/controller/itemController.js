@@ -46,9 +46,15 @@ app.controller("itemController", function ($scope, $location, itemService, comme
                 commentService.addComment($scope.comment).success(function (result) {
                     if (result.status) {
                         $scope.object.comments = result.object;
+                        mui.confirm(result.message, '注意!', btnArray, function (e) {
+                            if (e.index == 0) {
+                                $scope.object.comments = result.object;
+                            }
+                        })
                     } else {
                         mui.confirm(result.message, '失败!', btnArray, function (e) {
                             if (e.index == 0) {
+                                window.location.href = "login.html";
                             }
                         })
                     }
