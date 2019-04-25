@@ -44,7 +44,7 @@ public class UploadController {
                 //服务器上的路径/usr/local/apache-tomcat-8.5.40/webapps/ROOT/images
                 //尝试使用request.getSession().getServletContext().getRealPath("/")
                 String path = request.getSession().getServletContext().getRealPath("/") + "/images/";
-                File file = new File("E:\\Java\\IdeaProjects\\CampusTradingPlatform-Huzelin\\CampusTradingPlatform\\CampusTradingPlatform-part05-controller\\src\\main\\webapp\\images\\" + newName);
+                File file = new File(path + newName);
                 up_img_WU_FILE_0.transferTo(file);
                 //4.文件名称
                 System.out.println(newName);
