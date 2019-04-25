@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -59,6 +60,23 @@ public class ItemController {
         ResultInfo resultInfo = new ResultInfo(true, "成功!", null);
         TbUser user = holdUser();
         List<TbItem> itemList = itemService.findAllItems(user.getUserId());
+        List<TbItemDetailVO> list = new ArrayList<>();
+        itemList.stream().forEach(
+                item -> {
+                    TbItemDetailVO tbItemDetailVO = new TbItemDetailVO();
+                    BeanUtils.copyProperties(item, tbItemDetailVO);
+                    List<TbComment> listByItemId = commentService.findListByItemId(item.getItemId());
+                    tbItemDetailVO.setComments(listByItemId);
+                    list.add(tbItemDetailVO);
+                }
+        );
+        return resultInfo.setObject(list);
+    }
+
+    @GetMapping("search")
+    public ResultInfo search(@RequestParam String content) {
+        ResultInfo resultInfo = new ResultInfo(true, "成功!", null);
+        List<TbItem> itemList = itemService.search(content);
         return resultInfo.setObject(itemList);
     }
 
@@ -74,6 +92,7 @@ public class ItemController {
         List<TbItem> itemList = itemService.anyItems(type);
         return resultInfo.setObject(itemList);
     }
+
 
     /**
      * 获取用户

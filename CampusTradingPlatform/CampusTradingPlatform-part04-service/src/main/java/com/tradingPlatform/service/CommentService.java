@@ -14,4 +14,20 @@ public interface CommentService extends BaseService<TbComment> {
      * @return
      */
     List<TbComment> findListByItemId(Integer itemId);
+
+    /**
+     * 查询未读消息
+     *
+     * @param userId
+     * @return
+     */
+    int informationCount(Integer userId);
+
+    /**
+     * 未读消息
+     *
+     * @param userId
+     * @return
+     */
+    List informationNoLook(Integer userId);
 }

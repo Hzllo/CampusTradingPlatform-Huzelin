@@ -39,6 +39,32 @@ public class CommentController {
     }
 
     /**
+     * 查找未读数量
+     *
+     * @return
+     */
+    @GetMapping("count")
+    public ResultInfo informationCount() {
+        ResultInfo resultInfo = new ResultInfo(true, "查找成功!", null);
+        TbUser user = holdUser();
+        return resultInfo.setObject(commentService.informationCount(user.getUserId()));
+    }
+
+    /**
+     * 查找未读消息
+     *
+     * @return
+     */
+    @GetMapping("countnolook")
+    public ResultInfo informationNoLook() {
+        ResultInfo resultInfo = new ResultInfo(true, "查找成功!", null);
+        TbUser user = holdUser();
+        return resultInfo.setObject(commentService.informationNoLook(user.getUserId()));
+    }
+
+
+
+    /**
      * 增加一个
      *
      * @param comment
@@ -48,7 +74,7 @@ public class CommentController {
     public ResultInfo save(@RequestBody TbComment comment) {
         ResultInfo resultInfo = new ResultInfo(true, "评论成功!", null);
         TbUser user = holdUser();
-        comment.setCommentId(null).setLook(false).setUserId(user.getUserId()).setTime(new Date()).setUsername(user.getUsername());
+        comment.setCommentId(null).setLook(0).setUserId(user.getUserId()).setTime(new Date()).setUsername(user.getUsername());
         TbItem tbItem = itemService.findByPrimaryKeyService(comment.getItemId());
         if (tbItem.getUserId().equals(user.getUserId()) && comment.getType().equals(1)) {
             return resultInfo.setStatus(false).setMessage("自己不能给自己私信! ");

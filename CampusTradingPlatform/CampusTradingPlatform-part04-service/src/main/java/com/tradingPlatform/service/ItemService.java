@@ -22,4 +22,12 @@ public interface ItemService extends BaseService<TbItem> {
      * @return
      */
     List<TbItem> anyItems(Integer type);
+
+    /**
+     * 搜索
+     *
+     * @param content 搜索内容
+     * @return
+     */
+    List<TbItem> search(String content);
 }

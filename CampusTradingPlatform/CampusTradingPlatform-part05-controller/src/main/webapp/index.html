@@ -6,6 +6,8 @@
     <meta name="viewport"
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <title>看看</title>
+    <script type="text/javascript" rel="script" src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript" rel="script"></script>
     <link href="css/mui.min.css" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="css/app.css"/>
     <script src="js/angular.min.js"></script>
@@ -16,7 +18,7 @@
 </head>
 <body ng-app="kankan" ng-controller="userController" ng-init="getName();anyItems(1)">
 <header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
-    <a class="mui-icon mui-icon-bars" href="center.html"></a>
+    <a ng-if="username!=null" class="mui-icon mui-icon-bars" href="center.html"></a>
     <h1 class="mui-title">看看广场</h1>
     <button ng-if="username==null" class=" mui-pull-right mui-btn-link"><a href="login.html">登录</a></button>
     <button ng-if="username!=null" class=" mui-pull-right mui-btn-link"><b style="color: black">{{username}}，</b><a
@@ -25,8 +27,8 @@
 <div class="mui-content">
     <div class="mui-card">
         <div class="mui-card-header">
-            <input type="search" class="mui-input-clear mui-indexed-list-search-input" ng-model="searchContent"
-                   ng-keypres="search()" placeholder="搜你所想">
+            <input type="search" id="keyword" class="mui-input-clear mui-indexed-list-search-input"
+                   ng-keypress="enterEvent($event)" ng-model="searchContent" placeholder="搜你所想">
         </div>
         <div class="mui-card-content">
             <div class="mui-card-content-inner">
@@ -51,11 +53,11 @@
         </div>
     </div>
     <ul class="mui-table-view">
-        <li class="mui-table-view-cell mui-media" ng-repeat="item in items">
+        <li ng-repeat="item in items">
             <div class="mui-card">
                 <div class="mui-card-header"><label style="font-size: small">{{item.title}}</label></div>
                 <div class="mui-card-content">
-                    <a class="mui-card-link" href="itemdetail.html">
+                    <a class="mui-card-link" href="itemdetail.html#?itemId={{item.itemId}}">
                         <img src="{{item.imageUrl}}" alt="" width="100%"/><strong></strong>
                     </a>
                 </div>
@@ -78,5 +80,15 @@
     <script src="js/app.js"></script>
 </div>
 </body>
-
+<script type="text/javascript">
+    $("#keyword").on('keypress', function (e) {
+        var keycode = e.keyCode;
+        var searchName = $(this).val();
+        if (keycode == '13') {
+            e.preventDefault();
+            //请求搜索接口
+            window.location.href = "search.html#?searchContent=" + searchName;
+        }
+    });
+</script>
 </html>

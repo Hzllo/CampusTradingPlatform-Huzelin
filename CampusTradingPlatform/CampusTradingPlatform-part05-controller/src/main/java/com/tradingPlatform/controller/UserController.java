@@ -8,6 +8,7 @@ import com.tradingPlatform.vo.ResultInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.util.StringUtil;
 
@@ -67,6 +68,10 @@ public class UserController {
             }
             if (userService.findUserByPhone(user.getPhone()) != null) {
                 resultInfo.setMessage("该手机号已经被注册!");
+                return resultInfo;
+            }
+            if (StringUtils.isEmpty(user.getPassword())) {
+                resultInfo.setMessage("密码为空!");
                 return resultInfo;
             }
             if (StringUtil.isEmpty(user.getImage())) {

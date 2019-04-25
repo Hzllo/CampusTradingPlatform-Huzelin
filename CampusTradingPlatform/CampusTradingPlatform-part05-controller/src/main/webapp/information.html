@@ -15,9 +15,8 @@
 
     <script src="js/angular.min.js"></script>
     <script src="js/base.js"></script>
-    <script src="js/service/userService.js"></script>
-    <script src="js/service/itemService.js"></script>
-    <script src="js/controller/userController.js"></script>
+    <script src="js/service/commentService.js"></script>
+    <script src="js/controller/commentController.js"></script>
     <style>
         .mui-table h4, .mui-table h5, .mui-table .mui-h5, .mui-table .mui-h6, .mui-table p {
             margin-top: 0;
@@ -40,41 +39,34 @@
     </style>
 </head>
 
-<body ng-app="kankan" ng-controller="userController" ng-init="getName()">
+<body ng-app="kankan" ng-controller="commentController" ng-init="informationNoLook()">
 <header class="mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title">消息</h1>
 </header>
 <div class="mui-content">
 
-    <div class="mui-card">
+    <div class="mui-card" ng-if="informationnolook.length > 0">
         <div class="mui-card-header mui-badge-danger">
             未读消息
+            <button class="mui-btn mui-btn-grey">全部设为已读</button>
         </div>
         <div class="mui-card-content">
             <ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
-                <li class="mui-table-view-cell">
+                <li class="mui-table-view-cell" ng-repeat="ifrnl in informationnolook">
                     <div class="mui-table">
                         <div class="mui-table-cell mui-col-xs-10">
-                            <h4 class="mui-ellipsis">商品标题</h4>
-                            <h5>用户名：李四</h5>
-                            <p class="mui-h6 mui-ellipsis">Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿，</p>
+                            <h4 class="mui-ellipsis">商品标题: {{ifrnl.title}}</h4>
+                            <b>用户名: </b> <span class="mui-h5 mui-ellipsis">{{ifrnl.username}}</span><br>
+                            <b>评论内容: </b> <span class="mui-h5 mui-ellipsis">{{ifrnl.content}}</span><br>
+                            <b>评论时间: </b> <span class="mui-h6 mui-ellipsis">{{ifrnl.time|date:'MM-dd HH:mm'}}</span><br>
                         </div>
-                        <div class="mui-table-cell mui-col-xs-2 mui-text-right">
-                            <span class="mui-h5">时间</span>
-                        </div>
-                    </div>
-                </li>
-                <li class="mui-table-view-cell">
-                    <div class="mui-table">
-                        <div class="mui-table-cell mui-col-xs-10">
-                            <h4 class="mui-ellipsis-2">二手手机</h4>
-                            <h5>申请人：李四</h5>
-                            <p class="mui-h6 mui-ellipsis">Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿，</p>
-                        </div>
-                        <div class="mui-table-cell mui-col-xs-2 mui-text-right">
-                            <span class="mui-h5">12:25</span>
 
+                        <div class="mui-table-cell mui-col-xs-2 mui-text-right">
+                            <p class="mui-h6 mui-ellipsis"></p>
+                            <button class="mui-btn mui-btn-green">设为已读</button>
+                            <h1 class="mui-ellipsis"></h1>
+                            <button class="mui-btn mui-btn-blue">查看详情</button>
                         </div>
                     </div>
                 </li>

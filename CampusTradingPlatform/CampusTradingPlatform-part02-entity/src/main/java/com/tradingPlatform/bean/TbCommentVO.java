@@ -17,8 +17,7 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @NoArgsConstructor
-@Table(name = "tb_comment")
-public class TbComment implements Serializable {
+public class TbCommentVO implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +26,8 @@ public class TbComment implements Serializable {
     private String username;
 
     private Integer userId;
+
+    private String title;
 
     private Integer itemId;
 

@@ -15,6 +15,11 @@ app.service("itemService", function ($http) {
         });
     };
 
+    //获取未读评论
+    this.informationCount = function () {
+        return $http.get("comment/count.do?time=" + Math.random());
+    }
+
     //获取多个商品
     this.getItems = function () {
         return $http.get("item/findAll.do?time=" + Math.random());
@@ -38,6 +43,10 @@ app.service("itemService", function ($http) {
     //删除商品
     this.deleteItem = function (itemId) {
         return $http.get("item/delete.do?itemId=" + itemId);
+    }
+    //搜索商品
+    this.search = function (content) {
+        return $http.get("item/search.do?content=" + content);
     }
 
 })

@@ -42,7 +42,9 @@ public class UploadController {
                 String contextPath = request.getSession().getServletContext().getRealPath("/");
                 System.out.println("UploadController.upload:  图片路径  " + contextPath);
                 //服务器上的路径/usr/local/apache-tomcat-8.5.40/webapps/ROOT/images
-                File file = new File("D:\\IDEA_Projects\\CampusTradingPlatform-Huzelin\\CampusTradingPlatform\\CampusTradingPlatform-part05-controller\\src\\main\\webapp\\images\\" + newName);
+                //尝试使用request.getSession().getServletContext().getRealPath("/")
+                String path = request.getSession().getServletContext().getRealPath("/") + "/images/";
+                File file = new File(path + newName);
                 up_img_WU_FILE_0.transferTo(file);
                 //4.文件名称
                 System.out.println(newName);

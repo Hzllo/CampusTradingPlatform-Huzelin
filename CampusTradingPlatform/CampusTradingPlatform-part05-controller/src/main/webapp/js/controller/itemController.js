@@ -125,4 +125,14 @@ app.controller("itemController", function ($scope, $location, itemService, comme
         })
     }
 
+    //搜索商品
+    $scope.searchItem = function () {
+        var searchContent = $location.search()["searchContent"];
+        itemService.search(searchContent).success(function (result) {
+            if (result.status) {
+                $scope.items = result.object;
+            }
+        })
+    }
+
 })
