@@ -43,16 +43,21 @@ public class CommentServiceImpl extends BaseServiceImpl<TbComment> implements Co
     @Override
     public int informationCount(Integer userId) {
         //找出与之相关的物品
-        Example example = new Example(TbItem.class);
-        example.createCriteria().andEqualTo("userId", userId);
-        List<TbItem> itemList = itemMapper.selectByExample(example);
-        List<Integer> itemIds = new ArrayList<>();
-        itemList.stream().forEach(entity -> itemIds.add(entity.getItemId()));
+        List<Integer> itemIds = getItemsByUserId(userId);
 
         //找出未读评论
         Example example1 = new Example(TbComment.class);
         example1.createCriteria().andEqualTo("look", 0).andIn("itemId", itemIds).andNotEqualTo("userId", userId);
         return commentMapper.selectCountByExample(example1);
+    }
+
+    private List<Integer> getItemsByUserId(Integer userId) {
+        Example example = new Example(TbItem.class);
+        example.createCriteria().andEqualTo("userId", userId);
+        List<TbItem> itemList = itemMapper.selectByExample(example);
+        List<Integer> itemIds = new ArrayList<>();
+        itemList.stream().forEach(entity -> itemIds.add(entity.getItemId()));
+        return itemIds;
     }
 
     /**
@@ -64,16 +69,21 @@ public class CommentServiceImpl extends BaseServiceImpl<TbComment> implements Co
     @Override
     public List informationNoLook(Integer userId) {
         //找出与之相关的物品
-        Example example = new Example(TbItem.class);
-        example.createCriteria().andEqualTo("userId", userId);
-        List<TbItem> itemList = itemMapper.selectByExample(example);
-        List<Integer> itemIds = new ArrayList<>();
-        itemList.stream().forEach(entity -> itemIds.add(entity.getItemId()));
-
+        List<Integer> itemIds = getItemsByUserId(userId);
         //找出未读评论
         Example example1 = new Example(TbComment.class);
         example1.createCriteria().andEqualTo("look", 0).andIn("itemId", itemIds).andNotEqualTo("userId", userId);
         List<TbComment> commentList = commentMapper.selectByExample(example1);
+        return commentToCommentVO(commentList);
+    }
+
+    /**
+     * comment转commentVO
+     *
+     * @param commentList
+     * @return
+     */
+    private List<TbCommentVO> commentToCommentVO(List<TbComment> commentList) {
         List<TbCommentVO> commentVOList = new ArrayList<>();
         commentList.stream().forEach(comment -> {
             TbCommentVO tbCommentVO = new TbCommentVO();
@@ -83,5 +93,36 @@ public class CommentServiceImpl extends BaseServiceImpl<TbComment> implements Co
             commentVOList.add(tbCommentVO);
         });
         return commentVOList;
+    }
+
+    /**
+     * 已读消息
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public List informationLook(Integer userId) {
+        //找出与之相关的物品
+        List<Integer> itemIds = getItemsByUserId(userId);
+        //找出已读评论
+        Example example1 = new Example(TbComment.class);
+        example1.createCriteria().andEqualTo("look", 1).andIn("itemId", itemIds).andNotEqualTo("userId", userId);
+        List<TbComment> commentList = commentMapper.selectByExample(example1);
+        return commentToCommentVO(commentList);
+    }
+
+    @Override
+    public boolean setLook(Integer commentId) {
+        TbComment tbComment = null;
+        try {
+            tbComment = this.findByPrimaryKeyService(commentId);
+            tbComment.setLook(1);
+            this.updateService(tbComment);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 }

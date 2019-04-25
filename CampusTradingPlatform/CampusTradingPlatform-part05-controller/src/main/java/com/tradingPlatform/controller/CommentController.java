@@ -62,6 +62,17 @@ public class CommentController {
         return resultInfo.setObject(commentService.informationNoLook(user.getUserId()));
     }
 
+    /**
+     * 查找已读消息
+     *
+     * @return
+     */
+    @GetMapping("countlook")
+    public ResultInfo informationLook() {
+        ResultInfo resultInfo = new ResultInfo(true, "查找成功!", null);
+        TbUser user = holdUser();
+        return resultInfo.setObject(commentService.informationLook(user.getUserId()));
+    }
 
 
     /**
@@ -101,9 +112,33 @@ public class CommentController {
      *
      * @param commentId
      */
-    @DeleteMapping
-    public void delete(@RequestParam Integer commentId) {
-        commentService.deleteByPrimaryKeyService(commentId);
+    @GetMapping("delete")
+    public ResultInfo delete(@RequestParam Integer commentId) {
+        ResultInfo resultInfo = new ResultInfo(true, "删除成功!", null);
+        try {
+            commentService.deleteByPrimaryKeyService(commentId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return resultInfo.setStatus(false);
+        }
+        resultInfo = informationLook();
+        return resultInfo;
+    }
+
+    /**
+     * 设为已读
+     *
+     * @param commentId
+     * @return
+     */
+    @GetMapping("setLook")
+    public ResultInfo setLook(@RequestParam Integer commentId) {
+        ResultInfo resultInfo = new ResultInfo(false, "删除失败!", null);
+        if (commentService.setLook(commentId)) {
+            resultInfo = informationNoLook();
+            return resultInfo;
+        }
+        return resultInfo;
     }
 
 }

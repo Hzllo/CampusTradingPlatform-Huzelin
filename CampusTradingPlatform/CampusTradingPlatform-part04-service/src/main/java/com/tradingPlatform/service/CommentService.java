@@ -30,4 +30,20 @@ public interface CommentService extends BaseService<TbComment> {
      * @return
      */
     List informationNoLook(Integer userId);
+
+    /**
+     * 已读消息
+     *
+     * @param userId
+     * @return
+     */
+    List informationLook(Integer userId);
+
+    /**
+     * 设为已读
+     *
+     * @param commentId
+     * @return
+     */
+    boolean setLook(Integer commentId);
 }

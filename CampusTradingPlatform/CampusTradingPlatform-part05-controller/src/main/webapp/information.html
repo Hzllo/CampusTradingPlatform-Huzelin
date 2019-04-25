@@ -39,7 +39,7 @@
     </style>
 </head>
 
-<body ng-app="kankan" ng-controller="commentController" ng-init="informationNoLook()">
+<body ng-app="kankan" ng-controller="commentController" ng-init="informationNoLook();informationLook()">
 <header class="mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title">消息</h1>
@@ -56,17 +56,18 @@
                 <li class="mui-table-view-cell" ng-repeat="ifrnl in informationnolook">
                     <div class="mui-table">
                         <div class="mui-table-cell mui-col-xs-10">
-                            <h4 class="mui-ellipsis">商品标题: {{ifrnl.title}}</h4>
-                            <b>用户名: </b> <span class="mui-h5 mui-ellipsis">{{ifrnl.username}}</span><br>
+                            <h4 class="mui-ellipsis">标题: {{ifrnl.title}}
+                                <span class="mui-badge">{{ifrnl.type==2 ? "评论" : "私信"}}</span>
+                            </h4>
+                            <b>评论用户: </b> <span class="mui-h5 mui-ellipsis">{{ifrnl.username}}</span><br>
                             <b>评论内容: </b> <span class="mui-h5 mui-ellipsis">{{ifrnl.content}}</span><br>
                             <b>评论时间: </b> <span class="mui-h6 mui-ellipsis">{{ifrnl.time|date:'MM-dd HH:mm'}}</span><br>
                         </div>
-
                         <div class="mui-table-cell mui-col-xs-2 mui-text-right">
                             <p class="mui-h6 mui-ellipsis"></p>
-                            <button class="mui-btn mui-btn-green">设为已读</button>
+                            <button class="mui-btn mui-btn-green" ng-click="setLook(ifrnl.commentId)">设为已读</button>
                             <h1 class="mui-ellipsis"></h1>
-                            <button class="mui-btn mui-btn-blue">查看详情</button>
+                            <button class="mui-btn mui-btn-blue" ng-click="lookDetail(ifrnl.itemId)">查看详情</button>
                         </div>
                     </div>
                 </li>
@@ -75,34 +76,28 @@
     </div>
 
 
-    <div class="mui-card">
+    <div class="mui-card" ng-if="informationlook.length > 0">
         <div class="mui-card-header mui-badge-primary">
             已读消息
         </div>
         <div class="mui-card-content">
             <ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
-                <li class="mui-table-view-cell">
+                <li class="mui-table-view-cell" ng-repeat="ifrl in informationlook">
                     <div class="mui-table">
                         <div class="mui-table-cell mui-col-xs-10">
-                            <h4 class="mui-ellipsis">商品标题</h4>
-                            <h5>用户名：李四</h5>
-                            <p class="mui-h6 mui-ellipsis">Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿，</p>
+                            <h4 class="mui-ellipsis">标题: {{ifrl.title}}
+                                <span class="mui-badge">{{ifrl.type==2 ? "评论" : "私信"}}</span>
+                            </h4>
+                            <b>评论用户: </b> <span class="mui-h5 mui-ellipsis">{{ifrl.username}}</span><br>
+                            <b>评论内容: </b> <span class="mui-h5 mui-ellipsis">{{ifrl.content}}</span><br>
+                            <b>评论时间: </b> <span class="mui-h6 mui-ellipsis">{{ifrl.time|date:'MM-dd HH:mm'}}</span><br>
                         </div>
                         <div class="mui-table-cell mui-col-xs-2 mui-text-right">
-                            <span class="mui-h5">时间</span>
-                        </div>
-                    </div>
-                </li>
-                <li class="mui-table-view-cell">
-                    <div class="mui-table">
-                        <div class="mui-table-cell mui-col-xs-10">
-                            <h4 class="mui-ellipsis-2">信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款</h4>
-                            <h5>申请人：李四</h5>
-                            <p class="mui-h6 mui-ellipsis">Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿，</p>
-                        </div>
-                        <div class="mui-table-cell mui-col-xs-2 mui-text-right">
-                            <span class="mui-h5">12:25</span>
-
+                            <p class="mui-h6 mui-ellipsis"></p>
+                            <button class="mui-btn mui-btn-green" ng-click="deleteInformation(ifrl.commentId)">删除该条消息
+                            </button>
+                            <h1 class="mui-ellipsis"></h1>
+                            <button class="mui-btn mui-btn-blue" ng-click="lookDetail(ifrl.itemId)">查看详情</button>
                         </div>
                     </div>
                 </li>

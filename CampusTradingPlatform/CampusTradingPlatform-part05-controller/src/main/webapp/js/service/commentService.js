@@ -9,4 +9,17 @@ app.service("commentService", function ($http) {
         return $http.get("comment/countnolook.do?time=" + Math.random());
     }
 
+    this.informationLook = function () {
+        return $http.get("comment/countlook.do?time=" + Math.random());
+    }
+
+    this.deleteInformation = function (commentId) {
+        return $http.get("comment/delete.do?commentId=" + commentId);
+    }
+
+    this.setLook = function (commentId) {
+        return $http.get("comment/setLook.do?commentId=" + commentId);
+    }
+
+
 })
