@@ -133,7 +133,7 @@ public class ItemController {
         TbUser tbUser = holdUser();
         item.setTime(new Date());
         item.setUserId(tbUser.getUserId());
-        itemService.addService(item);
+        itemService.addService(item.setNum(0));
         if (itemService.findByPrimaryKeyService(item.getItemId()) != null) {
             resultInfo.setMessage("增加成功!").setObject(item).setStatus(true);
         }
