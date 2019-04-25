@@ -9,6 +9,7 @@ app.controller("commentController", function ($scope, commentService) {
         })
     }
 
+
     //已读消息
     $scope.informationLook = function () {
         commentService.informationLook().success(function (result) {
@@ -30,11 +31,21 @@ app.controller("commentController", function ($scope, commentService) {
         if (commentId != null && commentId != "") {
             commentService.setLook(commentId).success(function (result) {
                 if (result.status) {
-                    $scope.informationlook = result.object;
+                    $scope.informationLook();
                     $scope.informationNoLook();
                 }
             })
         }
+    }
+
+    //设为已读
+    $scope.setAllLook = function () {
+        commentService.setAllLook().success(function (result) {
+            if (result.status) {
+                $scope.informationLook();
+                $scope.informationNoLook();
+            }
+        })
     }
 
     //删除消息
@@ -46,7 +57,7 @@ app.controller("commentController", function ($scope, commentService) {
 
                     commentService.deleteInformation(commentId).success(function (result) {
                         if (result.status) {
-                            $scope.informationlook = result.object;
+                            $scope.informationLook();
                             $scope.informationNoLook();
                         }
                     })

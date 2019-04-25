@@ -46,4 +46,12 @@ public interface CommentService extends BaseService<TbComment> {
      * @return
      */
     boolean setLook(Integer commentId);
+
+    /**
+     * 设全部为已读
+     *
+     * @param userId
+     * @return
+     */
+    boolean setAllLook(Integer userId);
 }

@@ -1,9 +1,6 @@
 package com.tradingPlatform.controller;
 
-import com.tradingPlatform.bean.TbComment;
-import com.tradingPlatform.bean.TbItem;
-import com.tradingPlatform.bean.TbItemDetailVO;
-import com.tradingPlatform.bean.TbUser;
+import com.tradingPlatform.bean.*;
 import com.tradingPlatform.service.CommentService;
 import com.tradingPlatform.service.ItemService;
 import com.tradingPlatform.service.UserService;
@@ -48,6 +45,14 @@ public class ItemController {
         tbItemDetailVO.setUser(tbUser.setPassword(null).setPhone(null));
         List<TbComment> listByItemId = commentService.findListByItemId(itemId);
         return resultInfo.setObject(tbItemDetailVO.setComments(listByItemId));
+    }
+
+    @GetMapping("myThink")
+    public ResultInfo myThink() {
+        ResultInfo resultInfo = new ResultInfo(true, "成功!", null);
+        TbUser user = holdUser();
+        List<TbItemThinkVO> list = itemService.myThinkService(user.getUserId());
+        return resultInfo.setObject(list);
     }
 
     /**

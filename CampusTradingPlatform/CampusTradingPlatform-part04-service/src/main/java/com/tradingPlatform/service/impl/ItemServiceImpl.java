@@ -2,14 +2,19 @@ package com.tradingPlatform.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.tradingPlatform.bean.TbComment;
 import com.tradingPlatform.bean.TbItem;
+import com.tradingPlatform.bean.TbItemThinkVO;
 import com.tradingPlatform.impl.BaseServiceImpl;
+import com.tradingPlatform.mapper.CommentMapper;
 import com.tradingPlatform.mapper.ItemMapper;
 import com.tradingPlatform.service.ItemService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,6 +22,9 @@ public class ItemServiceImpl extends BaseServiceImpl<TbItem> implements ItemServ
 
     @Autowired
     private ItemMapper itemMapper;
+
+    @Autowired
+    private CommentMapper commentMapper;
 
     /**
      * 发现我上传的商品
@@ -82,5 +90,28 @@ public class ItemServiceImpl extends BaseServiceImpl<TbItem> implements ItemServ
                 orLike("content", "%" + content + "%");
         List<TbItem> itemList = itemMapper.selectByExample(example);
         return itemList;
+    }
+
+    /**
+     * 查看我想要的商品
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<TbItemThinkVO> myThinkService(Integer userId) {
+        Example example = new Example(TbComment.class);
+        example.orderBy("time").desc();
+        example.createCriteria().andEqualTo("userId", userId).andEqualTo("type", 1);
+        List<TbComment> commentList = commentMapper.selectByExample(example);
+        List<TbItemThinkVO> tbItemThinkVOList = new ArrayList<>();
+        commentList.stream().forEach(comment -> {
+            TbItemThinkVO tbItemThinkVO = new TbItemThinkVO();
+            TbItem item = itemMapper.selectByPrimaryKey(comment.getItemId());
+            BeanUtils.copyProperties(item, tbItemThinkVO);
+            tbItemThinkVO.setComment(comment);
+            tbItemThinkVOList.add(tbItemThinkVO);
+        });
+        return tbItemThinkVOList;
     }
 }

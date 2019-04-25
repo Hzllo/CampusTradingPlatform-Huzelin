@@ -1,15 +1,11 @@
 app.service("itemService", function ($http) {
 
     //图片上传
-    this.uploadFile = function () {
-        //创建html5的表单数据对象
-        var formData = new FormData();
-        //设置表单项
-        formData.append("up_img_WU_FILE_0", up_img_WU_FILE_0.files[0]);
+    this.uploadFile = function (entity) {
         return $http({
             url: "/upload.do",
             method: "post",
-            data: formData,
+            data: entity,
             headers: {"Content-Type": undefined},
             transformRequest: angular.identity
         });
@@ -18,6 +14,11 @@ app.service("itemService", function ($http) {
     //获取未读评论
     this.informationCount = function () {
         return $http.get("comment/count.do?time=" + Math.random());
+    }
+
+    //获取我想要的商品
+    this.youThinkItem = function () {
+        return $http.get("item/myThink.do?time=" + Math.random());
     }
 
     //获取多个商品

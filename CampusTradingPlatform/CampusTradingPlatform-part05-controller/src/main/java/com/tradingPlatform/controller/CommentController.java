@@ -133,8 +133,20 @@ public class CommentController {
      */
     @GetMapping("setLook")
     public ResultInfo setLook(@RequestParam Integer commentId) {
-        ResultInfo resultInfo = new ResultInfo(false, "删除失败!", null);
+        ResultInfo resultInfo = new ResultInfo(false, "执行成功!", null);
         if (commentService.setLook(commentId)) {
+            resultInfo = informationNoLook();
+            return resultInfo;
+        }
+        return resultInfo;
+    }
+
+
+    @GetMapping("setAllLook")
+    public ResultInfo setAllLook() {
+        ResultInfo resultInfo = new ResultInfo(false, "执行成功!", null);
+        TbUser user = holdUser();
+        if (commentService.setAllLook(user.getUserId())) {
             resultInfo = informationNoLook();
             return resultInfo;
         }

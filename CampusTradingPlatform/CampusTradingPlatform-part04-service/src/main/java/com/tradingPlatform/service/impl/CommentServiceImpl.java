@@ -35,7 +35,7 @@ public class CommentServiceImpl extends BaseServiceImpl<TbComment> implements Co
     }
 
     /**
-     * 查询未读消息
+     * 查询未读消息数量
      *
      * @param userId
      * @return
@@ -67,7 +67,7 @@ public class CommentServiceImpl extends BaseServiceImpl<TbComment> implements Co
      * @return
      */
     @Override
-    public List informationNoLook(Integer userId) {
+    public List<TbCommentVO> informationNoLook(Integer userId) {
         //找出与之相关的物品
         List<Integer> itemIds = getItemsByUserId(userId);
         //找出未读评论
@@ -121,6 +121,30 @@ public class CommentServiceImpl extends BaseServiceImpl<TbComment> implements Co
             this.updateService(tbComment);
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 设置全部未读评论为已读
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public boolean setAllLook(Integer userId) {
+        List<TbCommentVO> commentVOList = informationNoLook(userId);
+        List<Integer> ids = new ArrayList<>();
+        commentVOList.stream().forEach(
+                tbCommentVO -> {
+                    ids.add(tbCommentVO.getCommentId());
+                }
+        );
+        Example example = new Example(TbComment.class);
+        example.createCriteria().andEqualTo("look", 0).andIn("commentId", ids).andNotEqualTo("userId", userId);
+        int i = commentMapper.updateByExampleSelective(new TbComment().setLook(1), example);
+        if (i != ids.size()) {
             return false;
         }
         return true;

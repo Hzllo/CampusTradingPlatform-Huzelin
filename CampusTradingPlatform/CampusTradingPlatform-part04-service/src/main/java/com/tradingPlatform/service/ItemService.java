@@ -1,6 +1,7 @@
 package com.tradingPlatform.service;
 
 import com.tradingPlatform.bean.TbItem;
+import com.tradingPlatform.bean.TbItemThinkVO;
 import com.tradingPlatform.util.BaseService;
 
 import java.util.List;
@@ -30,4 +31,12 @@ public interface ItemService extends BaseService<TbItem> {
      * @return
      */
     List<TbItem> search(String content);
+
+    /**
+     * 查看我想要的商品
+     *
+     * @param userId
+     * @return
+     */
+    List<TbItemThinkVO> myThinkService(Integer userId);
 }

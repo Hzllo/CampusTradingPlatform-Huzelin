@@ -21,5 +21,9 @@ app.service("commentService", function ($http) {
         return $http.get("comment/setLook.do?commentId=" + commentId);
     }
 
+    this.setAllLook = function () {
+        return $http.get("comment/setAllLook.do?time=" + Math.random());
+    }
+
 
 })

@@ -49,7 +49,7 @@
     <div class="mui-card" ng-if="informationnolook.length > 0">
         <div class="mui-card-header mui-badge-danger">
             未读消息
-            <button class="mui-btn mui-btn-grey">全部设为已读</button>
+            <button class="mui-btn mui-btn-grey" ng-click="setAllLook()">全部设为已读</button>
         </div>
         <div class="mui-card-content">
             <ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
@@ -94,7 +94,7 @@
                         </div>
                         <div class="mui-table-cell mui-col-xs-2 mui-text-right">
                             <p class="mui-h6 mui-ellipsis"></p>
-                            <button class="mui-btn mui-btn-green" ng-click="deleteInformation(ifrl.commentId)">删除该条消息
+                            <button class="mui-btn mui-btn-green" ng-click="deleteInformation(ifrl.commentId)">删除消息
                             </button>
                             <h1 class="mui-ellipsis"></h1>
                             <button class="mui-btn mui-btn-blue" ng-click="lookDetail(ifrl.itemId)">查看详情</button>
