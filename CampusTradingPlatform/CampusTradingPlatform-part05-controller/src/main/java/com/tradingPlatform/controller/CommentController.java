@@ -10,6 +10,7 @@ import com.tradingPlatform.vo.ResultInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -84,6 +85,9 @@ public class CommentController {
     @PostMapping("add")
     public ResultInfo save(@RequestBody TbComment comment) {
         ResultInfo resultInfo = new ResultInfo(true, "评论成功!", null);
+        if (StringUtils.isEmpty(comment.getContent())) {
+            return resultInfo.setStatus(false).setMessage("内容为空! ");
+        }
         TbUser user = holdUser();
         comment.setCommentId(null).setLook(0).setUserId(user.getUserId()).setTime(new Date()).setUsername(user.getUsername());
         TbItem tbItem = itemService.findByPrimaryKeyService(comment.getItemId());

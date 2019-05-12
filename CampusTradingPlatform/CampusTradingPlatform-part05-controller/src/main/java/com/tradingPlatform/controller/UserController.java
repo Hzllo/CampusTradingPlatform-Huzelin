@@ -47,6 +47,15 @@ public class UserController {
     }
 
     /**
+     * 获取用户
+     */
+    private TbUser holdUser() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        TbUser tbUser = userService.findUserByUserName(user.getUsername());
+        return tbUser;
+    }
+
+    /**
      * 增加一个用户
      *
      * @param user
@@ -96,7 +105,8 @@ public class UserController {
     @PostMapping("update")
     public ResultInfo update(@RequestBody TbUser user) {
         ResultInfo resultInfo = ResultInfo.failure("修改失败！");
-        userService.updateService(user);
+        TbUser holdUser = holdUser();
+        userService.updateUser(user.setUserId(holdUser.getUserId()));
         TbUser tbUser = userService.findByPrimaryKeyService(user.getUserId());
         if (tbUser != null) {
             resultInfo = ResultInfo.success("修改成功!", tbUser);

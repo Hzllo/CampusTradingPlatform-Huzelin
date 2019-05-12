@@ -4,8 +4,10 @@ import com.tradingPlatform.bean.TbUser;
 import com.tradingPlatform.impl.BaseServiceImpl;
 import com.tradingPlatform.mapper.UserMapper;
 import com.tradingPlatform.service.UserService;
+import com.tradingPlatform.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
 @Service
@@ -38,8 +40,29 @@ public class UserServiceImpl extends BaseServiceImpl<TbUser> implements UserServ
     public TbUser findUserByPhone(String phone) {
 
         Example example = new Example(TbUser.class);
-        Example.Criteria criteria = example.createCriteria().andEqualTo("phone", phone);
+        example.createCriteria().andEqualTo("phone", phone);
         TbUser user = userMapper.selectOneByExample(example);
         return user;
+    }
+
+    /**
+     * 更新用户
+     *
+     * @param user 新用户数据
+     */
+    @Override
+    public void updateUser(TbUser user) {
+        TbUser tbUser = findByPrimaryKeyService(user.getUserId());
+        if (!StringUtils.isEmpty(user.getUsername())) {
+            tbUser.setUsername(user.getUsername());
+        }
+        if (!StringUtils.isEmpty(user.getImage())) {
+            tbUser.setUsername(user.getImage());
+        }
+        if (!StringUtils.isEmpty(user.getPassword())) {
+            String md5password = MD5Util.md5(user.getPassword());
+            tbUser.setUsername(md5password);
+        }
+        updateService(tbUser);
     }
 }
