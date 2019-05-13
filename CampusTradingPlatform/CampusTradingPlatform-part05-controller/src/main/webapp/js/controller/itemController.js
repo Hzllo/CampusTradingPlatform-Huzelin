@@ -56,37 +56,34 @@ app.controller("itemController", function ($scope, $location, itemService, comme
         //创建html5的表单数据对象
         var formData = new FormData();
         var fileObj = document.getElementById("up_img_WU_FILE_0").files[0];
+        var btnArray = ['确定'];
         //设置表单项
         //formData.append("up_img_WU_FILE_0", up_img_WU_FILE_0.files[0]);
         //fileObj.size / 1024 > 1025
-        if (false) { //大于1M，进行压缩上传
-            $scope.photoCompress(fileObj, {
-                quality: 0.2
-            }, function (base64Codes) {
-                //console.log("压缩后：" + base.length / 1024 + " " + base);
-                var bl = $scope.convertBase64UrlToBlob(base64Codes);
-                formData.append("up_img_WU_FILE_0", bl, "up_img_WU_FILE_0.jpg"); // 文件对象
-            });
-        } else { //小于等于1M 原图上传
+        if (fileObj.size / 1024 > 1025) { //大于1M，进行提示
+            mui.confirm('提醒', '图片大于1M!', btnArray, function (e) {
+                if (e.index == 0) {
+                }
+            })
+        } else {
             formData.append("up_img_WU_FILE_0", fileObj); // 文件对象
+            itemService.uploadFile(formData).success(function (result) {
+                if (result.status) {
+                    $scope.imageUrl = result.object;
+                    mui.confirm(result.message, '上传成功!', btnArray, function (e) {
+                        if (e.index == 0) {
+                        }
+                    })
+                } else {
+                    mui.confirm(result.message, '上传失败!', btnArray, function (e) {
+                        if (e.index == 0) {
+                        }
+                    })
+                }
+            }).error(function () {
+                alert("上传图片失败");
+            });
         }
-        itemService.uploadFile(formData).success(function (result) {
-            var btnArray = ['确定'];
-            if (result.status) {
-                $scope.imageUrl = result.object;
-                mui.confirm(result.message, '上传成功!', btnArray, function (e) {
-                    if (e.index == 0) {
-                    }
-                })
-            } else {
-                mui.confirm(result.message, '上传失败!', btnArray, function (e) {
-                    if (e.index == 0) {
-                    }
-                })
-            }
-        }).error(function () {
-            alert("上传图片失败");
-        });
     }
 
     //评论商品
