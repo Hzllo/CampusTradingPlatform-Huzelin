@@ -49,8 +49,8 @@
 		</div>
 
 		<div class="mui-card-footer">
-			<input type="file" class="mui-btn" id="up_img_WU_FILE_0" value="type=button"/>
-			<a class="mui-card-link"></a>
+			<input type="button" class="right-side" id="customInput" value="选择图片" onclick="TriggerInput()">
+			<input type="file" id="up_img_WU_FILE_0" style="display: none;">
 			<button class="mui-btn mui-btn-blue" ng-click="uploadFile()" type="button">上传</button>
 		</div>
 	</div>
@@ -65,6 +65,10 @@
     mui.init({
         swipeBack: true //启用右滑关闭功能
     });
+
+    function TriggerInput() {
+        document.getElementById("up_img_WU_FILE_0").click();
+    }
 </script>
 </body>
 

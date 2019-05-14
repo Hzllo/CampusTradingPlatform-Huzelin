@@ -57,11 +57,11 @@ public class UserServiceImpl extends BaseServiceImpl<TbUser> implements UserServ
             tbUser.setUsername(user.getUsername());
         }
         if (!StringUtils.isEmpty(user.getImage())) {
-            tbUser.setUsername(user.getImage());
+            tbUser.setImage(user.getImage());
         }
         if (!StringUtils.isEmpty(user.getPassword())) {
             String md5password = MD5Util.md5(user.getPassword());
-            tbUser.setUsername(md5password);
+            tbUser.setPassword(md5password);
         }
         updateService(tbUser);
     }

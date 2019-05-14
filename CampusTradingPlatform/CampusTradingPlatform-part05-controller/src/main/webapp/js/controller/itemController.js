@@ -61,7 +61,7 @@ app.controller("itemController", function ($scope, $location, itemService, comme
         //formData.append("up_img_WU_FILE_0", up_img_WU_FILE_0.files[0]);
         //fileObj.size / 1024 > 1025
         if (fileObj.size / 1024 > 1025) { //大于1M，进行提示
-            mui.confirm('提醒', '图片大于1M!', btnArray, function (e) {
+            mui.confirm('图片大于1M!', '提醒', btnArray, function (e) {
                 if (e.index == 0) {
                 }
             })

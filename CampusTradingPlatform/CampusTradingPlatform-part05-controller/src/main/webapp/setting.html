@@ -1,64 +1,78 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<meta charset="utf-8">
-		<title>看看</title>
-		<meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
-		<meta content="yes" name="apple-mobile-web-app-capable">
-		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<head>
+    <meta charset="utf-8">
+    <meta name="referrer" content="no-referrer">
+    <title>看看</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
 
-		<!--标准mui.css-->
-		<link href="css/mui.min.css" rel="stylesheet">
-		<script src="js/angular.min.js"></script>
-		<script src="js/base.js"></script>
-		<script src="js/service/userService.js"></script>
-		<script src="js/service/itemService.js"></script>
-		<script src="js/controller/userController.js"></script>
-		<!--App自定义的css-->
-		<!-- <link rel="stylesheet" type="text/css" href="../css/app.css" /> -->
-		<style>
-			h5 {
-				margin: 5px 7px;
-			}
-		</style>
-	</head>
-	<body ng-app="kankan" ng-controller="userController" ng-init="getUser()">
-	<header class="mui-bar mui-bar-nav">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		<h1 class="mui-title">资料修改</h1>
-		</header>
-		<div class="mui-content">
-			<div class="mui-content-padded" style="margin: 5px;">
+    <!--标准mui.css-->
+    <link href="css/mui.min.css" rel="stylesheet">
+    <script src="js/angular.min.js"></script>
+    <script src="js/base.js"></script>
+    <script src="js/service/userService.js"></script>
+    <script src="js/service/itemService.js"></script>
+    <script src="js/controller/userController.js"></script>
+    <!--App自定义的css-->
+    <!-- <link rel="stylesheet" type="text/css" href="../css/app.css" /> -->
+    <style>
+        h5 {
+            margin: 5px 7px;
+        }
+    </style>
+</head>
+<body ng-app="kankan" ng-controller="userController" ng-init="getUser()">
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">资料修改</h1>
+</header>
+<div class="mui-content">
+    <div class="mui-content-padded" style="margin: 5px;">
+        <div class="mui-card" style="margin-bottom: 35px;">
+            <div class="mui-card-header mui-card-media">
 
-				<form class="mui-input-group">
-					<div class="mui-input-row">
-						<label>用户名</label>
-						<input class="mui-input-clear" ng-model="user.username" placeholder="你的用户名" type="text">
-					</div>
-					<div class="mui-input-row">
-						<label>电话号码</label>
-						<input class="mui-input-clear" ng-model="user.phone" disabled="disabled" placeholder="你的号码"
-							   type="text">
-					</div>
-					<div class="mui-input-row">
-						<label>密码</label>
-						<input class="mui-input-clear" ng-model="user.password" placeholder="新密码" type="password">
-					</div>
-					<div class="mui-button-row">
-						<button class="mui-btn mui-btn-danger" onclick="return false;" type="button"
-								ng-click="update()">修改
-						</button>
-					</div>
-				</form>
-			</div>
-		</div>
-		<script src="js/mui.min.js"></script>
-	<script>
-		mui.init({
-			swipeBack: true //启用右滑关闭功能
-		});
-	</script>
-	</body>
+                <img src="{{user.image}}"/>
+                &nbsp;&nbsp;&nbsp;
+                <input type="button" class="right-side" id="customInput" value="选择图片" onclick="TriggerInput()">
+                &nbsp;
+                <button class="mui-btn mui-btn-blue" ng-click="uploadFile()" type="button">上传</button>
+            </div>
+            <form class="mui-input-group">
+                <div class="mui-input-row">
+                    <label>用户名</label>
+                    <input class="mui-input-clear" ng-model="user.username" placeholder="你的用户名" type="text">
+                </div>
+                <div class="mui-input-row">
+                    <label>电话号码</label>
+                    <input class="mui-input-clear" ng-model="user.phone" disabled="disabled" placeholder="你的号码"
+                           type="text">
+                </div>
+                <div class="mui-input-row">
+                    <label>密码</label>
+                    <input class="mui-input-clear" ng-model="user.password" placeholder="新密码" type="password">
+                </div>
+                <div class="mui-button-row">
+                    <button class="mui-btn mui-btn-danger" onclick="return false;" type="button" ng-click="update()">修改
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<input type="file" id="up_img_WU_FILE_0" style="display: none;">
+<script src="js/mui.min.js"></script>
+<script>
+    mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+
+    function TriggerInput() {
+        document.getElementById("up_img_WU_FILE_0").click();
+    }
+</script>
+</body>
 
 </html>

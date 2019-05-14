@@ -7,6 +7,37 @@ app.controller("userController", function ($scope, userService, itemService) {
         })
     };
 
+    //上传商品图片
+    $scope.uploadFile = function () {
+        //创建html5的表单数据对象
+        var formData = new FormData();
+        var fileObj = document.getElementById("up_img_WU_FILE_0").files[0];
+        var btnArray = ['确定'];
+        //设置表单项
+        //formData.append("up_img_WU_FILE_0", up_img_WU_FILE_0.files[0]);
+        //fileObj.size / 1024 > 1025
+        if (fileObj.size / 1024 > 1025) { //大于1M，进行提示
+            mui.confirm('图片大于1M!', '提醒', btnArray, function (e) {
+                if (e.index == 0) {
+                }
+            })
+        } else {
+            formData.append("up_img_WU_FILE_0", fileObj); // 文件对象
+            itemService.uploadFile(formData).success(function (result) {
+                if (result.status) {
+                    $scope.user.image = result.object;
+                } else {
+                    mui.confirm(result.message, '上传失败!', btnArray, function (e) {
+                        if (e.index == 0) {
+                        }
+                    })
+                }
+            }).error(function () {
+                alert("上传图片失败");
+            });
+        }
+    }
+
     //未读评论
     $scope.findCount = function () {
         itemService.informationCount().success(function (result) {
