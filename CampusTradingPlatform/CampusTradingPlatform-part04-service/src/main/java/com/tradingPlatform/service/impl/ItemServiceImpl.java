@@ -37,7 +37,7 @@ public class ItemServiceImpl extends BaseServiceImpl<TbItem> implements ItemServ
 
         Example example = new Example(TbItem.class);
         example.orderBy("time").desc();
-        Example.Criteria criteria = example.createCriteria().andEqualTo("userId", userId);
+        example.createCriteria().andEqualTo("userId", userId);
         List<TbItem> itemList = itemMapper.selectByExample(example);
         return itemList;
     }

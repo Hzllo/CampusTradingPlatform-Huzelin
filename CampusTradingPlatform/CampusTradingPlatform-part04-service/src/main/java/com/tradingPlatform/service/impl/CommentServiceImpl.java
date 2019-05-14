@@ -73,6 +73,7 @@ public class CommentServiceImpl extends BaseServiceImpl<TbComment> implements Co
         //找出未读评论
         Example example1 = new Example(TbComment.class);
         example1.createCriteria().andEqualTo("look", 0).andIn("itemId", itemIds).andNotEqualTo("userId", userId);
+        example1.orderBy("time").desc();
         List<TbComment> commentList = commentMapper.selectByExample(example1);
         return commentToCommentVO(commentList);
     }
@@ -114,7 +115,7 @@ public class CommentServiceImpl extends BaseServiceImpl<TbComment> implements Co
 
     @Override
     public boolean setLook(Integer commentId) {
-        TbComment tbComment = null;
+        TbComment tbComment;
         try {
             tbComment = this.findByPrimaryKeyService(commentId);
             tbComment.setLook(1);
