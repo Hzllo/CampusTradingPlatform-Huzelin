@@ -148,6 +148,8 @@
         </div>
     </div>
     <div class="mui-card-footer">
+        <button ng-if="object.mark==1" type="button" class="mui-btn">已被预定</button>
+        <button ng-if="object.mark==0" type="button" ng-click="markItem()" class="mui-btn mui-btn-warning">预定</button>
         <button class="mui-btn mui-btn-blue mui-btn-outlined" ng-click="commentItem(1)" type="button">想要</button>
         <button class="mui-btn mui-btn-blue mui-btn-outlined" ng-click="commentItem(2)" type="button">评论</button>
         <div id="info"></div>

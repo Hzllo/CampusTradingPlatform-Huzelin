@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>看看</title>
+    <meta name="referrer" content="no-referrer">
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+
+    <!--标准mui.css-->
+    <link href="css/mui.min.css" rel="stylesheet">
+    <script src="js/mui.min.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/base.js"></script>
+    <script src="js/service/itemService.js"></script>
+    <script src="js/service/commentService.js"></script>
+    <script src="js/controller/itemController.js"></script>
+    <!--App自定义的css-->
+    <!-- <link rel="stylesheet" type="text/css" href="../css/app.css" /> -->
+    <style>
+        h5 {
+            margin: 5px 7px;
+        }
+    </style>
+</head>
+
+<body ng-app="kankan" ng-controller="itemController" ng-init="itemDetailUpdate()">
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">修改商品</h1>
+</header>
+
+<div class="mui-content">
+
+
+    <form class="mui-input-group bg-aqua" style="margin: 10px 9px;">
+        <div class="mui-input-row">
+            <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;标题</label>
+            <input type="text" ng-model="item.title" class="mui-input-clear" placeholder="标题">
+        </div>
+    </form>
+
+
+    <div class="mui-card">
+        <div class="mui-card-content">
+            <img alt="" src="{{item.imageUrl}}" width="100%"/>
+        </div>
+
+        <div class="mui-card-footer">
+            <input type="file" class="mui-btn" id="up_img_WU_FILE_0" value="type=button"/>
+            <a class="mui-card-link"></a>
+            <button class="mui-btn mui-btn-blue" ng-click="uploadFile()" type="button">上传</button>
+        </div>
+    </div>
+    <div class="mui-input-row" style="margin: 10px 5px;">
+        <textarea id="textarea" ng-model="item.content" placeholder="内容" rows="5"></textarea>
+    </div>
+    <div class="mui-button-row">
+        <button class="mui-btn mui-btn-primary" ng-click="updateItem()" type="button">确认</button>&nbsp;&nbsp;
+    </div>
+</div>
+<script>
+    mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+</script>
+</body>
+
+</html>

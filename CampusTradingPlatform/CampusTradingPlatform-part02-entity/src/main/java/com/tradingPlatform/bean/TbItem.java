@@ -28,9 +28,13 @@ public class TbItem implements Serializable {
 
     private Integer num;
 
+    private Integer mark;
+
     private Date time;
 
     private String content;
+
+    private Integer markId;
 
     private String title;
 

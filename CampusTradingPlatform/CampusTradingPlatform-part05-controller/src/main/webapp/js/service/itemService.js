@@ -11,6 +11,11 @@ app.service("itemService", function ($http) {
         });
     };
 
+    //预订商品markItem
+    this.markItem = function (e) {
+        return $http.get("item/markItem.do?itemId=" + e);
+    }
+
     //获取未读评论
     this.informationCount = function () {
         return $http.get("comment/count.do?time=" + Math.random());
@@ -39,6 +44,11 @@ app.service("itemService", function ($http) {
     //上传商品
     this.add = function (entity) {
         return $http.post("item/addItem.do", entity);
+    }
+
+    //更新
+    this.update = function (entity) {
+        return $http.post("item/updateItem.do", entity);
     }
 
     //删除商品

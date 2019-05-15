@@ -141,25 +141,72 @@ public class ItemController {
     }
 
     /**
+     * 更新一个
+     *
+     * @param item
+     * @return
+     */
+    @PostMapping("updateItem")
+    public ResultInfo update(@RequestBody TbItem item) {
+        ResultInfo resultInfo = new ResultInfo(false, "更新失败!", null);
+        if (StringUtils.isEmpty(item.getImageUrl())) {
+            return resultInfo.setMessage("图片不存在！");
+        }
+        if (StringUtils.isEmpty(item.getContent())) {
+            return resultInfo.setMessage("内容不存在！");
+        }
+        if (StringUtils.isEmpty(item.getTitle())) {
+            return resultInfo.setMessage("标题不存在！");
+        }
+        if (item.getTitle().length() > 12) {
+            return resultInfo.setMessage("标题过长！");
+        }
+        TbUser tbUser = holdUser();
+        item.setTime(new Date());
+        item.setUserId(tbUser.getUserId());
+        itemService.updateService(item);
+        if (itemService.findByPrimaryKeyService(item.getItemId()) != null) {
+            resultInfo.setMessage("更新成功!").setObject(item).setStatus(true);
+        }
+        return resultInfo;
+    }
+
+    /**
      * 删除
      *
      * @param itemId
      */
     @GetMapping("delete")
-    public void delete(@RequestParam Integer itemId) {
+    public ResultInfo delete(@RequestParam Integer itemId) {
+        ResultInfo resultInfo = new ResultInfo(true, "更新成功!", null);
+        TbItem tbItem = itemService.findByPrimaryKeyService(itemId);
+        if (tbItem.getMark() == 1) {
+            return resultInfo.setStatus(false).setMessage("该商品已被预订! ");
+        }
         itemService.deleteByPrimaryKeyService(itemId);
+        return resultInfo;
     }
 
     /**
-     * 更新
+     * 预订商品
      *
-     * @param item
+     * @param itemId
      * @return
      */
-    @GetMapping("update")
-    public TbItem update(@RequestBody TbItem item) {
-        itemService.updateService(item);
-        return itemService.findByPrimaryKeyService(item.getItemId());
+    @GetMapping("markItem")
+    public ResultInfo markItem(@RequestParam Integer itemId) {
+        ResultInfo resultInfo = new ResultInfo(true, "预订成功!", null);
+        TbItem tbItem = itemService.findByPrimaryKeyService(itemId);
+        if (tbItem.getMark() == 1) {
+            return resultInfo.setStatus(false).setMessage("该商品已被预订! ");
+        }
+        Integer userId = holdUser().getUserId();
+        if (userId == tbItem.getUserId()) {
+            return resultInfo.setStatus(false).setMessage("不能预订自己的商品! ");
+        }
+        tbItem.setMark(1).setMarkId(userId);
+        itemService.updateService(tbItem);
+        return resultInfo;
     }
 
 }

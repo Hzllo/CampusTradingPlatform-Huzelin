@@ -1,56 +1,5 @@
 app.controller("itemController", function ($scope, $location, itemService, commentService) {
 
-    $scope.canvasDataURL = function (path, obj, callback) {
-        var img = new Image();
-        img.src = path;
-        img.onload = function () {
-            var that = this;
-            // 默认按比例压缩
-            var w = that.width,
-                h = that.height,
-                scale = w / h;
-            w = obj.width || w;
-            h = obj.height || (w / scale);
-            var quality = 0.7;  // 默认图片质量为0.7
-            //生成canvas
-            var canvas = document.createElement('canvas');
-            var ctx = canvas.getContext('2d');
-            // 创建属性节点
-            var anw = document.createAttribute("width");
-            anw.nodeValue = w;
-            var anh = document.createAttribute("height");
-            anh.nodeValue = h;
-            canvas.setAttributeNode(anw);
-            canvas.setAttributeNode(anh);
-            ctx.drawImage(that, 0, 0, w, h);
-            // 图像质量
-            if (obj.quality && obj.quality <= 1 && obj.quality > 0) {
-                quality = obj.quality;
-            }
-            // quality值越小，所绘制出的图像越模糊
-            var base64 = canvas.toDataURL('image/jpeg', quality);
-            // 回调函数返回base64的值
-            callback(base64);
-        }
-    }
-    $scope.photoCompress = function (file, w, objDiv) {
-        var ready = new FileReader();
-        /*开始读取指定的Blob对象或File对象中的内容. 当读取操作完成时,readyState属性的值会成为DONE,如果设置了onloadend事件处理程序,则调用之.同时,result属性中将包含一个data: URL格式的字符串以表示所读取文件的内容.*/
-        ready.readAsDataURL(file);
-        ready.onload = function () {
-            var re = this.result;
-            $scope.canvasDataURL(re, w, objDiv)
-        }
-    }
-    $scope.convertBase64UrlToBlob = function (urlData) {
-        var arr = urlData.split(','), mime = arr[0].match(/:(.*?);/)[1],
-            bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
-        while (n--) {
-            u8arr[n] = bstr.charCodeAt(n);
-        }
-        return new Blob([u8arr], {type: mime});
-    }
-
     //上传商品图片
     $scope.uploadFile = function () {
         //创建html5的表单数据对象
@@ -74,6 +23,7 @@ app.controller("itemController", function ($scope, $location, itemService, comme
                         if (e.index == 0) {
                         }
                     })
+                    $scope.item.imageUrl = result.object;
                 } else {
                     mui.confirm(result.message, '上传失败!', btnArray, function (e) {
                         if (e.index == 0) {
@@ -143,7 +93,14 @@ app.controller("itemController", function ($scope, $location, itemService, comme
         mui.confirm('确定下架该商品?', '警告', btnArray, function (e) {
             if (e.index == 0) {
                 itemService.deleteItem(id).success(function (result) {
-                    window.location.reload(true);
+                    if (result.status) {
+                        window.location.reload(true);
+                    } else {
+                        mui.confirm(result.message, '错误', btnArray, function (e) {
+                            if (e.index == 0) {
+                            }
+                        })
+                    }
                 })
             } else {
             }
@@ -171,12 +128,44 @@ app.controller("itemController", function ($scope, $location, itemService, comme
         })
     }
 
+    //更新商品
+    $scope.updateItem = function () {
+        if ($scope.imageUrl != null) {
+            $scope.item.imageUrl = $scope.imageUrl;
+        }
+        itemService.update($scope.item).success(function (result) {
+            var btnArray = ['确定'];
+            if (result.status) {
+                mui.confirm(result.message, '恭喜你', btnArray, function (e) {
+                    if (e.index == 0) {
+                        location.href = "myItem.html";
+                    }
+                })
+            } else {
+                mui.confirm(result.message, '错误', btnArray, function (e) {
+                    if (e.index == 0) {
+                    }
+                })
+            }
+        })
+    }
+
     //商品详情
     $scope.itemDetail = function () {
         var itemId = $location.search()["itemId"];
         itemService.itemDetail(itemId).success(function (result) {
             if (result.status) {
                 $scope.object = result.object;
+            }
+        })
+    }
+
+    //商品详情-修改商品
+    $scope.itemDetailUpdate = function () {
+        var itemId = $location.search()["itemId"];
+        itemService.itemDetail(itemId).success(function (result) {
+            if (result.status) {
+                $scope.item = result.object;
             }
         })
     }
@@ -190,11 +179,36 @@ app.controller("itemController", function ($scope, $location, itemService, comme
         })
     }
 
+    //更新商品跳转链接
+    $scope.updateItemLink = function (itemId) {
+        window.location.href = "updateItem.html#?itemId=" + itemId;
+    }
+
     //获取所有商品
     $scope.myThinkItem = function () {
         itemService.youThinkItem().success(function (result) {
             if (result.status) {
                 $scope.items = result.object;
+            }
+        })
+    }
+
+    //预订商品markItem
+    $scope.markItem = function () {
+        var itemId = $location.search()["itemId"];
+        itemService.markItem(itemId).success(function (result) {
+            var btnArray = ['确定'];
+            if (result.status) {
+                mui.confirm(result.message, '恭喜你', btnArray, function (e) {
+                    if (e.index == 0) {
+                        window.location.reload(true);
+                    }
+                })
+            } else {
+                mui.confirm(result.message, '错误', btnArray, function (e) {
+                    if (e.index == 0) {
+                    }
+                })
             }
         })
     }

@@ -32,6 +32,10 @@ public class TbItemDetailVO implements Serializable {
 
     private String content;
 
+    private Integer num;
+
+    private Integer mark;
+
     private String title;
 
     private String imageUrl;
