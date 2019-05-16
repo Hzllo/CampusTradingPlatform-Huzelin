@@ -107,6 +107,26 @@ app.controller("itemController", function ($scope, $location, itemService, comme
         })
     }
 
+    //下架商品
+    $scope.updateMark = function (itemId) {
+        var btnArray = ['是', '否'];
+        mui.confirm('确定取消用户预订该商品?', '警告', btnArray, function (e) {
+            if (e.index == 0) {
+                itemService.updateMark(itemId).success(function (result) {
+                    if (result.status) {
+                        window.location.reload(true);
+                    } else {
+                        mui.confirm(result.message, '错误', btnArray, function (e) {
+                            if (e.index == 0) {
+                            }
+                        })
+                    }
+                })
+            } else {
+            }
+        })
+    }
+
     $scope.item = new Object();
     //上架商品
     $scope.addItem = function () {
@@ -128,7 +148,7 @@ app.controller("itemController", function ($scope, $location, itemService, comme
         })
     }
 
-    //更新商品
+    //更新商品-取消预订
     $scope.updateItem = function () {
         if ($scope.imageUrl != null) {
             $scope.item.imageUrl = $scope.imageUrl;
@@ -148,6 +168,13 @@ app.controller("itemController", function ($scope, $location, itemService, comme
                 })
             }
         })
+    }
+
+    //查看详情
+    $scope.lookDetail = function (itemId) {
+        if (itemId != null && itemId != "") {
+            window.location.href = "itemdetail.html#?itemId=" + itemId;
+        }
     }
 
     //商品详情
@@ -173,6 +200,15 @@ app.controller("itemController", function ($scope, $location, itemService, comme
     //获取所有商品
     $scope.finAllItem = function () {
         itemService.getItems().success(function (result) {
+            if (result.status) {
+                $scope.items = result.object;
+            }
+        })
+    }
+
+    //获取预订商品
+    $scope.myMark = function () {
+        itemService.myMark().success(function (result) {
             if (result.status) {
                 $scope.items = result.object;
             }

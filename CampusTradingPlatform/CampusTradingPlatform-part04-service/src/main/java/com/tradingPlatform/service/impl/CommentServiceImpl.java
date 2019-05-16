@@ -47,7 +47,7 @@ public class CommentServiceImpl extends BaseServiceImpl<TbComment> implements Co
 
         //找出未读评论
         Example example1 = new Example(TbComment.class);
-        example1.createCriteria().andEqualTo("look", 0).andIn("itemId", itemIds).andNotEqualTo("userId", userId);
+        example1.createCriteria().andEqualTo("look", 0).andIn("itemId", itemIds);
         return commentMapper.selectCountByExample(example1);
     }
 
@@ -72,7 +72,7 @@ public class CommentServiceImpl extends BaseServiceImpl<TbComment> implements Co
         List<Integer> itemIds = getItemsByUserId(userId);
         //找出未读评论
         Example example1 = new Example(TbComment.class);
-        example1.createCriteria().andEqualTo("look", 0).andIn("itemId", itemIds).andNotEqualTo("userId", userId);
+        example1.createCriteria().andEqualTo("look", 0).andIn("itemId", itemIds);
         example1.orderBy("time").desc();
         List<TbComment> commentList = commentMapper.selectByExample(example1);
         return commentToCommentVO(commentList);
@@ -109,6 +109,7 @@ public class CommentServiceImpl extends BaseServiceImpl<TbComment> implements Co
         //找出已读评论
         Example example1 = new Example(TbComment.class);
         example1.createCriteria().andEqualTo("look", 1).andIn("itemId", itemIds).andNotEqualTo("userId", userId);
+        example1.orderBy("time").desc();
         List<TbComment> commentList = commentMapper.selectByExample(example1);
         return commentToCommentVO(commentList);
     }

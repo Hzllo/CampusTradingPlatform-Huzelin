@@ -69,6 +69,9 @@ public class ItemController {
         itemList.stream().forEach(
                 item -> {
                     TbItemDetailVO tbItemDetailVO = new TbItemDetailVO();
+                    if (item.getMark() == 1) {
+                        tbItemDetailVO.setMarkName(userService.findByPrimaryKeyService(item.getMarkId()).getUsername());
+                    }
                     BeanUtils.copyProperties(item, tbItemDetailVO);
                     List<TbComment> listByItemId = commentService.findListByItemId(item.getItemId());
                     tbItemDetailVO.setComments(listByItemId);
@@ -205,6 +208,28 @@ public class ItemController {
             return resultInfo.setStatus(false).setMessage("不能预订自己的商品! ");
         }
         tbItem.setMark(1).setMarkId(userId);
+        itemService.updateService(tbItem);
+        return resultInfo;
+    }
+
+    /**
+     * 我的预订
+     *
+     * @param type
+     * @return
+     */
+    @GetMapping("myMark")
+    public ResultInfo myMark() {
+        ResultInfo resultInfo = new ResultInfo(true, "成功!", null);
+        List<TbItem> itemList = itemService.myMark(holdUser().getUserId());
+        return resultInfo.setObject(itemList);
+    }
+
+    @GetMapping("updateMark")
+    public ResultInfo updateMark(@RequestParam Integer itemId) {
+        ResultInfo resultInfo = new ResultInfo(true, "已取消预订!", null);
+        TbItem tbItem = itemService.findByPrimaryKeyService(itemId);
+        tbItem.setMark(0).setMarkId(0);
         itemService.updateService(tbItem);
         return resultInfo;
     }

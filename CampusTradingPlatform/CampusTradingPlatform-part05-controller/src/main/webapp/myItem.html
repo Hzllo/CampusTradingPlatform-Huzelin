@@ -216,7 +216,8 @@
 </header>
 <div class="mui-content">
     <div class="mui-card" ng-repeat="item in items">
-        <div class="mui-card-header">标题：{{item.title}}</div>
+        <div class="mui-card-header">标题：{{item.title}}<span ng-if="item.mark==1" class="mui-badge">已被 {{item.markName}} 预订</span>
+        </div>
         <div class="mui-card-content">
             <img alt="" src="{{item.imageUrl}}" width="100%"/>
         </div>
@@ -236,6 +237,9 @@
             </ul>
         </div>
         <div class="mui-card-footer">
+            <button ng-if="item.mark==1" class="mui-btn mui-btn-blue" id='update' type="button"
+                    ng-click="updateMark(item.itemId)">取消预订
+            </button>
             <button class="mui-btn mui-btn-green" id='update' type="button" ng-click="updateItemLink(item.itemId)">修改
             </button>
             <button class="mui-btn mui-btn-danger" id='delete' ng-click="deleteItem(item.itemId)" type="button">下架

@@ -84,15 +84,17 @@ public class CommentController {
      */
     @PostMapping("add")
     public ResultInfo save(@RequestBody TbComment comment) {
-        ResultInfo resultInfo = new ResultInfo(true, "评论成功!", null);
+        ResultInfo resultInfo = new ResultInfo(true, "成功!", null);
         if (StringUtils.isEmpty(comment.getContent())) {
             return resultInfo.setStatus(false).setMessage("内容为空! ");
         }
         TbUser user = holdUser();
         comment.setCommentId(null).setLook(0).setUserId(user.getUserId()).setTime(new Date()).setUsername(user.getUsername());
         TbItem tbItem = itemService.findByPrimaryKeyService(comment.getItemId());
-        if (tbItem.getUserId().equals(user.getUserId()) && comment.getType().equals(1)) {
-            return resultInfo.setStatus(false).setMessage("自己不能给自己私信! ");
+        if (comment.getUserId() == null) {
+            if (tbItem.getUserId().equals(user.getUserId()) && comment.getType().equals(1)) {
+                return resultInfo.setStatus(false).setMessage("自己不能给自己私信! ");
+            }
         }
         tbItem.setNum(tbItem.getNum() + 1);
         commentService.addService(comment);

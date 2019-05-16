@@ -114,4 +114,18 @@ public class ItemServiceImpl extends BaseServiceImpl<TbItem> implements ItemServ
         });
         return tbItemThinkVOList;
     }
+
+    /**
+     * 我的预订
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<TbItem> myMark(Integer userId) {
+        Example example = new Example(TbItem.class);
+        example.orderBy("time").desc();
+        example.createCriteria().andEqualTo("markId", userId).andEqualTo("mark", 1);
+        return itemMapper.selectByExample(example);
+    }
 }

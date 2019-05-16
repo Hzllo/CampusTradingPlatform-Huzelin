@@ -31,6 +31,11 @@ app.service("itemService", function ($http) {
         return $http.get("item/findAll.do?time=" + Math.random());
     }
 
+    //获取预订商品
+    this.myMark = function () {
+        return $http.get("item/myMark.do?time=" + Math.random());
+    }
+
     //首页商品
     this.anyItems = function (type) {
         return $http.get("item/anyItems.do?type=" + type);
@@ -49,6 +54,10 @@ app.service("itemService", function ($http) {
     //更新
     this.update = function (entity) {
         return $http.post("item/updateItem.do", entity);
+    }
+    //取消预订
+    this.updateMark = function (id) {
+        return $http.get("item/updateMark.do?itemId=" + id);
     }
 
     //删除商品

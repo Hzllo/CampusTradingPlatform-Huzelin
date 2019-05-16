@@ -24,6 +24,8 @@ public class TbItemDetailVO implements Serializable {
 
     private Integer userId;
 
+    private String markName;
+
     private TbUser user;
 
     private List<TbComment> comments;

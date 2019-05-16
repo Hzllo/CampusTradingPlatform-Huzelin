@@ -39,4 +39,12 @@ public interface ItemService extends BaseService<TbItem> {
      * @return
      */
     List<TbItemThinkVO> myThinkService(Integer userId);
+
+    /**
+     * 我的预订列表
+     *
+     * @param userId
+     * @return
+     */
+    List<TbItem> myMark(Integer userId);
 }
